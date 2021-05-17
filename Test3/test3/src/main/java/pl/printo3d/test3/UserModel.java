@@ -1,7 +1,5 @@
 ﻿package pl.printo3d.test3;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class UserModel {
   String id;
   String uname;
