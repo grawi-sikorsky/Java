@@ -1,23 +1,15 @@
 ﻿package pl.printo3d.test3;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.catalina.User;
 import org.apache.catalina.connector.Response;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -43,19 +35,6 @@ public class UserService {
 
   public void getAlljUsers()
   {
-    //User[] jusers = webClient.get().uri("/users")
-    //.retrieve()
-    //.bodyToMono(User[].class).block();
-    //System.out.println( jusers[0].getFullName().toString() );
-
-
-    //System.out.println(users);
-/*
-    System.out.println(webClient.get()
-    .uri("/users")
-    .retrieve();
-*/
-    //return usr;
   }
   
   public void getTodos()
@@ -76,13 +55,45 @@ public class UserService {
   .retrieve()
   .bodyToMono(Response.class);
 
-    public String getResult() {
-        return ">> Result Mono<ClientResponse> = " + responseMono.flatMap(res -> res.bodyToMono(String.class)).block();
-    }
+  public String getResult() {
+      return ">> Result Mono<ClientResponse> = " + responseMono.flatMap(res -> res.bodyToMono(String.class)).block();
+  }
 
-    public String getRes()
+  public Integer getAllTodosCount() {
+
+    System.out.println("Fetching all TODOS objects through REST..");
+
+    // Fetch from 3rd party API; configure fetch
+    RequestHeadersSpec<?> spec = WebClient.create().
+        get().uri("https://jsonplaceholder.typicode.com/todos");
+    
+    long start = System.currentTimeMillis();
+    long end;
+
+    // do fetch and map result
+    List<TodoModel> todos = spec.retrieve().
+        toEntityList(TodoModel.class).block().getBody();
+
+    end = System.currentTimeMillis();
+    System.out.println("TIME ELAPSED: " + (end - start) + " ms");
+    System.out.println(String.format("...received %d items.", todos.size()));
+
+    start = System.currentTimeMillis();
+    int countTrue=0;
+    for(TodoModel todo : todos)
     {
-      return " >> Moje mono: " + resp.flatMap(r -> r.bodyToMono(String.class)).block();
+      
+      if(todo.isCompleted() == true)
+      {
+        System.out.println("userID: " + todo.getUserId() + ", utitle: " + todo.getTitle() + " is Completed?: " + todo.isCompleted());
+        countTrue++;
+      }
     }
+    System.out.println("COMPLETED TASKS: " + countTrue);
 
+    end = System.currentTimeMillis();
+    System.out.println("TIME ELAPSED: " + (end - start) + " ms");
+
+    return todos.size();
+  }
 }

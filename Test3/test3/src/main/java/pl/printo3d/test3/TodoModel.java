@@ -32,7 +32,4 @@ public class TodoModel {
   public void setCompleted(boolean completed) {
     this.completed = completed;
   }
-
-  
-  
 }
