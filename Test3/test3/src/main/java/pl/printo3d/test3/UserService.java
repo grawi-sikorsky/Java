@@ -107,8 +107,6 @@ public class UserService {
     //List<String> tudus = todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
     Integer tdcomplete;
 
-    
-
     for(TodoModel td : todos)
     {
       for(UserModel ur : users)

@@ -1,39 +1,56 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>All users</title>
+	<title>Users Page</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1> Users </h1>
+			<h1>Users</h1>
+			<h4>From: http://jsonplaceholder.typicode.com/</h4>
+			<thead>
+				<tr>
+					<th>Pobranych uzytkownikow: </th>
+					<th th:text=${usrcnt}> Brak danych... </th>
+				</tr>
+			</thead>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<table class="table">
 				<thead>
 					<tr>
 						<th> User ID: </th>
+						<th> Name: </th>
 						<th> Username: </th>
+						<th> Phone: </th>
+						<th> Website: </th>
+						<th> Todo: </th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:if="${vhtml == 0}">
 						<td colspan="2"> No users in data </td>
 					</tr>
-					<tr th:each="book : ${vhtml}">
-						<td><span th:text="${vhtml}"> UserID </span></td>
-						<td><span th:text="${atr2}"> Usernaaaame </span></td>
+					<tr th:each="usr : ${usrname}">
+						<td><span th:text="${usr.id}"> UserID </span></td>
+						<td><span th:text="${usr.name}"> Name </span></td>
+						<td><a th:text="${usr.username}" th:href="|/user?uid=${usr.id}|"> Username </a></td>
+						<td><span th:text="${usr.phone}"> Phone </span></td>
+						<td><a th:text="${usr.website}" th:href="|http://${usr.website}|"> Website </a></td>
+						<!-- <td th:each="todo : ${todos}"> -->
+							<!-- <p th:if="${todo.userId} == ${usr.id}" th:text="${todo.completed} ? '*' : 'x'"> Todo </p> -->
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<a class="btn btn-success" href="#" th:href="@{vhtml}"> BTN test </a>
 			<a class="btn btn-primary" href="#" th:href="@{vhtml}" th:classappend="${vhtml} ? 'disabled' : ''"> BTN test2 </a>
+			<a class="btn btn-primary" href="#" th:href="@{vhtml}" th:classappend="${vhtml} ? 'disabled' : ''"> BTN test3 </a>
 		</div>
 	</div>
 </div>

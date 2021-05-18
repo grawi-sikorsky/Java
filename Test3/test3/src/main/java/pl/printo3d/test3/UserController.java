@@ -31,17 +31,16 @@ public class UserController {
   {
     Map<UserModel,TodoModel> uidtodo;// = new Map<UserModel,TodoModel>;
 
-    userService.getAllTodos();
-    userService.getUsersCount();
-    userService.getUserTodoMap();
+    //userService.getAllTodos();
+    //userService.getUsersCount();
 
-    mdl.addAttribute("utodos", userService.getUserTodoMap());
+    //mdl.addAttribute("utodos", userService.getUserTodoMap());
     mdl.addAttribute("todos", userService.getAllTodos());
     mdl.addAttribute("usrcnt", userService.getUsersCount());
     mdl.addAttribute("usrname", userService.getAllUsers());
     
     //redirectAttributes.addAttribute("todoa", userService.getAllTodos());
-    return "atest";
+    return "users";
   }
 
   @RequestMapping(value = "/user", method = {RequestMethod.GET, RequestMethod.POST})
