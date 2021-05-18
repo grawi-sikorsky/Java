@@ -13,6 +13,7 @@ public class UserService {
   private List<UserModel> users = Arrays.asList(  new UserModel("123", "uname: askdfj;askjdf"),
                                                   new UserModel("122", "uname: asdfff") );
 
+  private List<TodoModel> todos;
   private WebClient webClient = WebClient.create("https://jsonplaceholder.typicode.com/");
 
   public List<UserModel> getAllUsers()
@@ -28,6 +29,11 @@ public class UserService {
 
   public Integer getAllTodosCount() {
 
+    return todos.size();
+  }
+
+  public List<TodoModel> getAllTodos()
+  {
     System.out.println("Fetching all TODOS objects through REST..");
 
     // Fetch from 3rd party API; configure fetch
@@ -38,8 +44,7 @@ public class UserService {
     long end;
 
     // do fetch and map result
-    List<TodoModel> todos = spec.retrieve().
-        toEntityList(TodoModel.class).block().getBody();
+    todos = spec.retrieve().toEntityList(TodoModel.class).block().getBody();
 
     end = System.currentTimeMillis();
     System.out.println("TIME ELAPSED: " + (end - start) + " ms");
@@ -49,7 +54,6 @@ public class UserService {
     int countTrue=0;
     for(TodoModel todo : todos)
     {
-      
       if(todo.isCompleted() == true)
       {
         System.out.println("userID: " + todo.getUserId() + ", utitle: " + todo.getTitle() + " is Completed?: " + todo.isCompleted());
@@ -61,6 +65,10 @@ public class UserService {
     end = System.currentTimeMillis();
     System.out.println("TIME ELAPSED: " + (end - start) + " ms");
 
-    return todos.size();
+    for(TodoModel todo : todos)
+    {
+      //System.out.println(todo.getUserId());
+    }
+    return todos;
   }
 }
