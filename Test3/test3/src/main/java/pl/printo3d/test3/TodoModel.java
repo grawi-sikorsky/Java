@@ -4,7 +4,7 @@ public class TodoModel {
 
   private String userId;
   private int id;
-  private String title;
+  //private String title;
   private boolean completed;
 
   
@@ -20,12 +20,12 @@ public class TodoModel {
   public void setId(int id) {
     this.id = id;
   }
-  public String getTitle() {
+  /*public String getTitle() {
     return title;
   }
   public void setTitle(String title) {
     this.title = title;
-  }
+  }*/
   public boolean isCompleted() {
     return completed;
   }

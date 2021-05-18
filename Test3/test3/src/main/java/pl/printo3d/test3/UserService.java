@@ -2,6 +2,7 @@
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,22 +11,52 @@ import org.springframework.web.reactive.function.client.WebClient.RequestHeaders
 @Service
 public class UserService {
 
-  private List<UserModel> users = Arrays.asList(  new UserModel("123", "uname: askdfj;askjdf"),
-                                                  new UserModel("122", "uname: asdfff") );
+  UserService()
+  {
+    // Fetch from 3rd party API; configure fetch
+    RequestHeadersSpec<?> spec = WebClient.create().
+    get().uri("https://jsonplaceholder.typicode.com/todos");
+
+    // do fetch and map result
+    todos = spec.retrieve().toEntityList(TodoModel.class).block().getBody();
+
+    RequestHeadersSpec<?> uspec = WebClient.create().
+    get().uri("https://jsonplaceholder.typicode.com/users");
+
+    users = uspec.retrieve().toEntityList(UserModel.class).block().getBody();
+
+    // Zdaza sie konekszyn tajmaut - trzeba zrobic jakies zabezpiecznie
+  }
 
   private List<TodoModel> todos;
+  private List<UserModel> users;
+
   private WebClient webClient = WebClient.create("https://jsonplaceholder.typicode.com/");
+
+  public Integer getUsersCount()
+  {
+    return users.size();
+  }
 
   public List<UserModel> getAllUsers()
   {
+    for(UserModel usr : users)
+    {
+      System.out.println(usr.getName());
+    }
+    //users.
     return users;
   }
-
-  public UserModel getUser(String id)
+  public String userNamesList()
   {
-    return users.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+    String temp="";
+    for(UserModel usr : users)
+    {
+      temp.concat(usr.getName());
+    }
+    return temp;
   }
-
+  
 
   public Integer getAllTodosCount() {
 
@@ -34,41 +65,28 @@ public class UserService {
 
   public List<TodoModel> getAllTodos()
   {
-    System.out.println("Fetching all TODOS objects through REST..");
-
+    System.out.println("Feczujemy wszystkie TODOS z jsonplaceholder..");
+/*
     // Fetch from 3rd party API; configure fetch
     RequestHeadersSpec<?> spec = WebClient.create().
         get().uri("https://jsonplaceholder.typicode.com/todos");
-    
-    long start = System.currentTimeMillis();
-    long end;
-
+  
     // do fetch and map result
     todos = spec.retrieve().toEntityList(TodoModel.class).block().getBody();
+*/
+    System.out.println(String.format("...otrzymano %d obiektow.", todos.size()));
 
-    end = System.currentTimeMillis();
-    System.out.println("TIME ELAPSED: " + (end - start) + " ms");
-    System.out.println(String.format("...received %d items.", todos.size()));
-
-    start = System.currentTimeMillis();
     int countTrue=0;
     for(TodoModel todo : todos)
     {
       if(todo.isCompleted() == true)
       {
-        System.out.println("userID: " + todo.getUserId() + ", utitle: " + todo.getTitle() + " is Completed?: " + todo.isCompleted());
+        System.out.println("userID: " + todo.getUserId() + " TodoID: " + todo.getId() + " is Completed?: " + todo.isCompleted());
         countTrue++;
       }
     }
-    System.out.println("COMPLETED TASKS: " + countTrue);
+    System.out.println("COMPLETED TASKS: " + countTrue + " ze wszystkich: " + todos.size());
 
-    end = System.currentTimeMillis();
-    System.out.println("TIME ELAPSED: " + (end - start) + " ms");
-
-    for(TodoModel todo : todos)
-    {
-      //System.out.println(todo.getUserId());
-    }
     return todos;
   }
 }

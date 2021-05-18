@@ -1,24 +1,18 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Users Page</title>
+	<title>All users</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1> Users (from JsonPlaceHolder)</h1>
-			<thead>
-				<tr>
-					<th>Pobranych uzytkownikow: </th>
-					<th th:text=${usrcnt}> Brak danych... </th>
-				</tr>
-			</thead>
+			<h1> Users </h1>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-6">
 			<table class="table">
 				<thead>
 					<tr>
@@ -30,14 +24,14 @@
 					<tr th:if="${vhtml == 0}">
 						<td colspan="2"> No users in data </td>
 					</tr>
-					<tr th:each="usr : ${usrname}">
-						<td><span th:text="${usr.id}"> UserID </span></td>
-						<td><span th:text="${usr.name}"> Usernaaaame </span></td>
+					<tr th:each="book : ${vhtml}">
+						<td><span th:text="${vhtml}"> UserID </span></td>
+						<td><span th:text="${atr2}"> Usernaaaame </span></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-6">
 			<a class="btn btn-success" href="#" th:href="@{vhtml}"> BTN test </a>
 			<a class="btn btn-primary" href="#" th:href="@{vhtml}" th:classappend="${vhtml} ? 'disabled' : ''"> BTN test2 </a>
 		</div>
