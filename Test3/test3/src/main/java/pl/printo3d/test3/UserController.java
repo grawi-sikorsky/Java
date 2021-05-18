@@ -48,8 +48,9 @@ public class UserController {
   public String showOneUser(@RequestParam Integer uid, Model mdl)
   {
     mdl.addAttribute("user", userService.getUser(uid));
-    mdl.addAttribute("utodo", userService.getUserCompleteTodos(uid));
-    
+    mdl.addAttribute("utodo", userService.getUserTodos(uid));
+    mdl.addAttribute("compl", userService.getUserCompleteTodos(uid));
+
     return "user";
   }
 }

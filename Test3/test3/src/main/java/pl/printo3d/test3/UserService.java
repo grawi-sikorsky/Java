@@ -75,19 +75,33 @@ public class UserService {
     return userModel;
   }
 
-  public List<TodoModel> getUserCompleteTodos(int uid)
+  public String getUserCompleteTodos(int uid)
+  {
+    List<TodoModel> userFiltered = 
+    todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
+    Integer tododone=0; // ilosc wykonanych todos
+    String response="";
+
+    for (TodoModel tm : userFiltered) 
+    {
+      //userFiltered.stream().filter(comp->comp.isCompleted());
+      if(tm.isCompleted() == true) tododone++;
+    }
+
+    response = "Zadania zakonczone : " + tododone + " / " + userFiltered.size();
+  
+    return response;
+  }
+  // w getUserTodos oraz getUserCompleteTodos jest wykonywany ten sam stream filtrujacy - poprawic
+  public List<TodoModel> getUserTodos(int uid)
   {
     List<TodoModel> odfiltrowane = 
     todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
     
-    for (TodoModel tm : odfiltrowane) 
+    for (TodoModel tm : odfiltrowane)
     {
       System.out.println(tm.getId());
-      
-      //if(todoModel.getUserId() == )
-      //mp[]=todoModel.isCompleted()
     }
-  
     return odfiltrowane;
   }
 
