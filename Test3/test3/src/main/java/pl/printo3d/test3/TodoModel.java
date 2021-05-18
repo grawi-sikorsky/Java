@@ -2,16 +2,16 @@
 
 public class TodoModel {
 
-  private String userId;
+  private int userId;
   private int id;
-  //private String title;
+  private String title;
   private boolean completed;
 
   
-  public String getUserId() {
+  public int getUserId() {
     return userId;
   }
-  public void setUserId(String userId) {
+  public void setUserId(int userId) {
     this.userId = userId;
   }
   public int getId() {
@@ -20,12 +20,12 @@ public class TodoModel {
   public void setId(int id) {
     this.id = id;
   }
-  /*public String getTitle() {
+  public String getTitle() {
     return title;
   }
   public void setTitle(String title) {
     this.title = title;
-  }*/
+  }
   public boolean isCompleted() {
     return completed;
   }

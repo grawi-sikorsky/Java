@@ -17,14 +17,6 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @RequestMapping("/users")
-  @ResponseBody
-  public Integer users()
-  {
-    userService.getAllUsers();
-    return userService.getUsersCount();
-  }
-
   @RequestMapping("/todos")
   @ResponseBody
   public Integer todos()
@@ -34,19 +26,30 @@ public class UserController {
     return userService.getAllTodosCount();
   }
 
-  @RequestMapping(value="atest", method={RequestMethod.GET, RequestMethod.POST})
-  public String showAlltodos(@RequestParam String reqname, Model mdl, UserModel usr)
+  @RequestMapping(value="/users", method={RequestMethod.GET, RequestMethod.POST})
+  public String showAllUsers(Model mdl)
   {
     Map<UserModel,TodoModel> uidtodo;// = new Map<UserModel,TodoModel>;
 
     userService.getAllTodos();
     userService.getUsersCount();
+    userService.getUserTodoMap();
 
+    mdl.addAttribute("utodos", userService.getUserTodoMap());
     mdl.addAttribute("todos", userService.getAllTodos());
     mdl.addAttribute("usrcnt", userService.getUsersCount());
     mdl.addAttribute("usrname", userService.getAllUsers());
     
     //redirectAttributes.addAttribute("todoa", userService.getAllTodos());
     return "atest";
+  }
+
+  @RequestMapping(value = "/user", method = {RequestMethod.GET, RequestMethod.POST})
+  public String showOneUser(@RequestParam Integer uid, Model mdl)
+  {
+    mdl.addAttribute("user", userService.getUser(uid));
+    mdl.addAttribute("utodo", userService.getUserCompleteTodos(uid));
+    
+    return "user";
   }
 }

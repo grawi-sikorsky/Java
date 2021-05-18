@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Users Page</title>
+	<title>User Page</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1> Users (from JsonPlaceHolder)</h1>
+			<h1> User Details</h1>
 			<thead>
 				<tr>
 					<th>Pobranych uzytkownikow: </th>
@@ -27,17 +27,16 @@
 						<th> Username: </th>
 						<th> Phone: </th>
 						<th> Website: </th>
-						<th> Todo: </th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:if="${vhtml == 0}">
 						<td colspan="2"> No users in data </td>
 					</tr>
-					<tr th:each="usr : ${usrname}">
+					<tr th:each="usr : ${user}">
 						<td><span th:text="${usr.id}"> UserID </span></td>
 						<td><span th:text="${usr.name}"> Name </span></td>
-						<td><a th:text="${usr.username}" th:href="|/user?uid=${usr.id}|"> Username </a></td>
+						<td><span th:text="${usr.username}" > Username </span></td>
 						<td><span th:text="${usr.phone}"> Phone </span></td>
 						<td><a th:text="${usr.website}" th:href="|http://${usr.website}|"> Website </a></td>
 						<!-- <td th:each="todo : ${todos}"> -->
@@ -45,6 +44,22 @@
 					</tr>
 				</tbody>
 			</table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th> Todo: </th>
+            <th> Completed? </th>
+            <th> Title </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="todo : ${utodo}">
+            <td th:text="| ID: ${todo.id}|"></td>
+            <td th:text="${todo.completed} ? '[ ]' : '[*]'"></td>
+            <td th:text="|Title: ${todo.title}|"></td>
+          </tr>
+        </tbody>
+      </table>
 		</div>
 		<div class="col-md-4">
 			<a class="btn btn-success" href="#" th:href="@{vhtml}"> BTN test </a>

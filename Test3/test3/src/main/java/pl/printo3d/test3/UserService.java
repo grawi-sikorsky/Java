@@ -1,8 +1,9 @@
 ﻿package pl.printo3d.test3;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -40,11 +41,6 @@ public class UserService {
 
   public List<UserModel> getAllUsers()
   {
-    for(UserModel usr : users)
-    {
-      System.out.println(usr.getName());
-    }
-    //users.
     return users;
   }  
 
@@ -71,4 +67,51 @@ public class UserService {
 
     return todos;
   }
+
+  public UserModel getUser(Integer uid)
+  {
+    UserModel userModel = users.get(uid-1); // user id sa od 1 w gore...
+
+    return userModel;
+  }
+
+  public List<TodoModel> getUserCompleteTodos(int uid)
+  {
+    List<TodoModel> odfiltrowane = 
+    todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
+    
+    for (TodoModel tm : odfiltrowane) 
+    {
+      System.out.println(tm.getId());
+      
+      //if(todoModel.getUserId() == )
+      //mp[]=todoModel.isCompleted()
+    }
+  
+    return odfiltrowane;
+  }
+
+  public Map<Integer,TodoModel> getUserTodoMap()
+  {
+    Map<Integer,TodoModel> mp = new HashMap<Integer,TodoModel>();
+    //List<String> tudus = todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
+    Integer tdcomplete;
+
+    
+
+    for(TodoModel td : todos)
+    {
+      for(UserModel ur : users)
+      {
+        if(td.getUserId() == ur.getId())
+        {
+
+          System.out.println("ooooooo"+ur.getId());
+          mp.put(td.getUserId(), td);
+        }
+      }
+    }
+    return mp;
+  }
+
 }
