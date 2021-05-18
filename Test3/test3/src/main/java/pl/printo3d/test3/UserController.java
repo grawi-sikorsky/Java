@@ -29,7 +29,7 @@ public class UserController {
   @RequestMapping(value="/users", method={RequestMethod.GET, RequestMethod.POST})
   public String showAllUsers(Model mdl)
   {
-    Map<UserModel,TodoModel> uidtodo;// = new Map<UserModel,TodoModel>;
+    Map<UserModel,TodoModel> uidtodo;// = new Map<UserModel,TodoModel>; out
 
     //userService.getAllTodos();
     //userService.getUsersCount();
