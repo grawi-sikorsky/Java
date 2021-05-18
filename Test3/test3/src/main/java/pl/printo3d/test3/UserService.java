@@ -46,34 +46,16 @@ public class UserService {
     }
     //users.
     return users;
-  }
-  public String userNamesList()
+  }  
+
+  public Integer getAllTodosCount() 
   {
-    String temp="";
-    for(UserModel usr : users)
-    {
-      temp.concat(usr.getName());
-    }
-    return temp;
-  }
-  
-
-  public Integer getAllTodosCount() {
-
     return todos.size();
   }
 
   public List<TodoModel> getAllTodos()
   {
     System.out.println("Feczujemy wszystkie TODOS z jsonplaceholder..");
-/*
-    // Fetch from 3rd party API; configure fetch
-    RequestHeadersSpec<?> spec = WebClient.create().
-        get().uri("https://jsonplaceholder.typicode.com/todos");
-  
-    // do fetch and map result
-    todos = spec.retrieve().toEntityList(TodoModel.class).block().getBody();
-*/
     System.out.println(String.format("...otrzymano %d obiektow.", todos.size()));
 
     int countTrue=0;

@@ -18,12 +18,16 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<table class="table">
 				<thead>
 					<tr>
 						<th> User ID: </th>
+						<th> Name: </th>
 						<th> Username: </th>
+						<th> Phone: </th>
+						<th> Website: </th>
+						<th> Todo: </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,14 +36,21 @@
 					</tr>
 					<tr th:each="usr : ${usrname}">
 						<td><span th:text="${usr.id}"> UserID </span></td>
-						<td><span th:text="${usr.name}"> Usernaaaame </span></td>
+						<td><span th:text="${usr.name}"> Name </span></td>
+						<td><span th:text="${usr.username}"> Username </span></td>
+						<td><span th:text="${usr.phone}"> Phone </span></td>
+						<td><span th:text="${usr.website}"> Website </span></td>
+						<td th:each="todo : ${todos}">
+							<span th:if="${todo.userId} == ${usr.id}" th:text="${todo.completed} ? '*' : 'x'"> Todo </span>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<a class="btn btn-success" href="#" th:href="@{vhtml}"> BTN test </a>
 			<a class="btn btn-primary" href="#" th:href="@{vhtml}" th:classappend="${vhtml} ? 'disabled' : ''"> BTN test2 </a>
+			<a class="btn btn-primary" href="#" th:href="@{vhtml}" th:classappend="${vhtml} ? 'disabled' : ''"> BTN test3 </a>
 		</div>
 	</div>
 </div>
