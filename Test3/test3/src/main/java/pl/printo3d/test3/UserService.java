@@ -98,10 +98,6 @@ public class UserService {
     List<TodoModel> odfiltrowane = 
     todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
     
-    for (TodoModel tm : odfiltrowane)
-    {
-      System.out.println(tm.getId());
-    }
     return odfiltrowane;
   }
 
@@ -129,3 +125,4 @@ public class UserService {
   }
 
 }
+
