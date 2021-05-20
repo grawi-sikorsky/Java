@@ -1,0 +1,27 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p>Obadaj ile jest Todos: <a href="/todos">TUTEJ</a></p>
+    <p></p>
+    <p>Wybierz Pan Usera:</p>
+    <div class="form-group blu-margin">
+      <select class="form-control"  id="dropOperator">
+      <option value="0">Wybierz usera</option>
+      <option th:each="operator : ${todos}" th:value="${todos.userId}" th:text="${todos.userId}"></option>
+      </select>
+    </div>
+    <p></p>
+    <div class="col-lg-3" th:object="${user}">
+      <select class="form-control" id="testOrder" name="testOrder">
+          <option value="">Wybierz se pan</option>
+          <option th:each="users : ${user}"
+                  th:value="${users.testCode}"
+                  th:text="${users.testCode}+' : '+${users.testName}"></option>
+      </select>
+  </div>
+</body>
+</html>

@@ -1,13 +1,13 @@
-package pl.printo3d.test4;
+package pl.printo3d.waluty;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Test4Application {
+public class WalutyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Test4Application.class, args);
+		SpringApplication.run(WalutyApplication.class, args);
 	}
 
 }
