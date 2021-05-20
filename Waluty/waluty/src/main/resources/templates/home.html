@@ -3,33 +3,59 @@
 <head> 
     <title>Kantorek u Schaba</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <p>Pampam: <a href="/rates">TUTEJ</a></p>
-    <p></p>
-    <p>Wybierz Pan cos:</p>
-    <div class="form-group blu-margin">
-      <select class="form-control"  id="dropOperator">
-      <option value="0">Wybierz se pan</option>
-      <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
-      </select>
-    </div>
-    <p></p>
-    <div class="col-lg-3" th:object="${user}">
-      <select class="form-control" id="testOrder" name="testOrder">
-          <option value="">Wybierz se pan</option>
-          <option th:each="users : ${user}"
-                  th:value="${users.testCode}"
-                  th:text="${users.testCode}+' : '+${users.testName}"></option>
-      </select>
+  <div class="jumbotron text-center">
+    <h1>Kantorek u schaba.</h1>
+    <p>Sztos.</p> 
   </div>
-  <div class="col-lg-3">
-    <table>
-      <tr th:each="instance : ${waluty}">
-        <td th:text="${instance.key}"></td>
-        <td th:text="${instance.value}"></td>
-      </tr>
-    </table>
+    
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Column 1</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+      </div>
+      <div class="col-sm-4">
+        <h3>Column 2</h3>
+        <p>Pampam: <a href="/rates">TUTEJ</a></p>
+        <p></p>
+        <p>Wybierz Pan cos:</p>
+        <div class="form-group blu-margin">
+          <select class="form-control"  id="dropOperator">
+          <option value="0">Wybierz se pan</option>
+          <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
+          </select>
+        </div>
+        <div class="form-group blu-margin" th:object="${user}">
+          <select class="form-control" id="testOrder" name="testOrder">
+              <option value="">Wybierz se pan</option>
+              <option th:each="instance : ${waluty}"
+                      th:value="${instance.value}"
+                      th:text="${instance.key}+' = '+${instance.value}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <h3>Column 3</h3>        
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <table>
+        <tr th:each="instance : ${waluty}">
+          <td th:text="${instance.key}"></td>
+          <td th:text="${instance.value}"></td>
+        </tr>
+      </table>
+    </div>
   </div>
 </body>
 </html>
