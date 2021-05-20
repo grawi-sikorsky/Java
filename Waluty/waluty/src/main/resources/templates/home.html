@@ -5,13 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p>Obadaj ile jest Todos: <a href="/todos">TUTEJ</a></p>
+    <p>Pampam: <a href="/rates">TUTEJ</a></p>
     <p></p>
-    <p>Wybierz Pan Usera:</p>
+    <p>Wybierz Pan cos:</p>
     <div class="form-group blu-margin">
       <select class="form-control"  id="dropOperator">
-      <option value="0">Wybierz usera</option>
-      <option th:each="operator : ${todos}" th:value="${todos.userId}" th:text="${todos.userId}"></option>
+      <option value="0">Wybierz se pan</option>
+      <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
       </select>
     </div>
     <p></p>
@@ -22,6 +22,14 @@
                   th:value="${users.testCode}"
                   th:text="${users.testCode}+' : '+${users.testName}"></option>
       </select>
+  </div>
+  <div class="col-lg-3">
+    <table>
+      <tr th:each="instance : ${waluty}">
+        <td th:text="${instance.key}"></td>
+        <td th:text="${instance.value}"></td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>

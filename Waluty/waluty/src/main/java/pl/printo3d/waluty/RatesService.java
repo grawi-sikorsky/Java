@@ -1,6 +1,7 @@
 ﻿package pl.printo3d.waluty;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +22,6 @@ public class RatesService {
     
     RestTemplate restTemplate = new RestTemplate();
     data = restTemplate.getForObject(builder.toString(), RatesModel.class);
-
-
-    System.out.println(data);
     
     data.getRates().entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
 
@@ -35,6 +33,11 @@ public class RatesService {
 
   public String getRateFromCur(HashMap<String,String> map, String searchKey)
   {
-    return map.get(searchKey);
+    return data.getRates().get(searchKey);
+  }
+  public String getWaluty()
+  {
+    //data.getRates().entrySet().forEach(keys -> System.out.println(keys.getKey()));
+    return data.getRates().entrySet().stream().collect(Collectors.toList()).toString(); // .forEach(e -> e.getKey().toString()).get();
   }
 }
