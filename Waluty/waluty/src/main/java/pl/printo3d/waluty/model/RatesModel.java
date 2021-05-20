@@ -1,5 +1,6 @@
 ﻿package pl.printo3d.waluty.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 // RATES MODEL Z OPENEXCHANGERATES.ORG
@@ -9,10 +10,16 @@ public class RatesModel
   String license;
   String timestamp;
   String base;
-  List<String> rates;
+  HashMap<String, String> rates;
 
 
-  public String getDisclaimer() {
+  public HashMap<String, String> getRates() {
+		return rates;
+	}
+	public void setRates(HashMap<String, String> rates) {
+		this.rates = rates;
+	}
+	public String getDisclaimer() {
     return disclaimer;
   }
   public void setDisclaimer(String disclaimer) {
@@ -36,12 +43,13 @@ public class RatesModel
   public void setBase(String base) {
     this.base = base;
   }
-  public List<String> getRates() {
+  /*
+  public List<pRatesModel> getRates() {
     return rates;
   }
-  public void setRates(List<String> rates) {
+  public void setRates(List<pRatesModel> rates) {
     this.rates = rates;
-  }
+  }*/
 
   
 }
