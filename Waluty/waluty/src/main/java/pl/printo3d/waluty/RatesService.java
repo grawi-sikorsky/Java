@@ -1,12 +1,15 @@
 ﻿package pl.printo3d.waluty;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import org.springframework.boot.web.server.PortInUseException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +19,7 @@ import pl.printo3d.waluty.model.RatesModel;
 public class RatesService {
 
   RatesModel data = new RatesModel();
+  LinkedHashMap<String,String> baseCurrencyValues = new LinkedHashMap<>();
 
   public RatesModel getRatesFromAPI()
   {
@@ -27,17 +31,15 @@ public class RatesService {
     RestTemplate restTemplate = new RestTemplate();
     data = restTemplate.getForObject(builder.toString(), RatesModel.class);
     
-    data.getRates().entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
+    //data.getRates().entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
 
-    System.out.println("Szukamy KEY: BTC");
-    System.out.println("ZNALEZIONE KUFAAA" + getRateFromCur(data.getRates(), "AUD"));
+    //System.out.println("ZNALEZIONE KUFAAA" + getExRateFromName(data.getRates(), "AUD"));
 
     return data;
   }
 
-  public String getRateFromCur(HashMap<String,String> map, String searchKey)
+  public String getExRateFromName(String searchKey)
   {
-    System.out.println("FOUND" + data.getRates().get(searchKey));
     return data.getRates().get(searchKey);
   }
 
@@ -54,13 +56,26 @@ public class RatesService {
     return data.getRates().entrySet().stream().collect(Collectors.toList()).toString();
   }
 
-  public String getFilteredRates(String lookfor)
-  {
-    return "a";
-  }
-
   public String getBaseCurrency()
   {
     return data.getBase();
+  }
+
+  public String getWalutyBasedOnBaseCurrency()
+  {
+    Set<HashMap.Entry<String, String>> entries = data.getRates().entrySet();
+    BigDecimal jeden = new BigDecimal(1);
+
+    for (HashMap.Entry<String, String> mapEntry : entries) 
+    {
+      BigDecimal temp = new BigDecimal(mapEntry.getValue());
+      
+      temp = jeden.divide(temp, 90, RoundingMode.HALF_UP);
+      baseCurrencyValues.put(mapEntry.getKey(), temp.toString().substring(0, 20));
+    }
+
+    baseCurrencyValues.entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
+  
+    return baseCurrencyValues.entrySet().stream().collect(Collectors.toList()).toString();
   }
 }

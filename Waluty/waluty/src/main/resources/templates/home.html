@@ -33,7 +33,7 @@
         <div class="list-group" style="max-height: 400px; overflow: auto;">
           <table>
             <tr th:each="instance : ${waluty}" style="cursor: pointer" th:key="${instance.key}" onclick="rowClicked(this.getAttribute('key'))">
-              <td><a th:text="${instance.key}" method="POST" th:href="|?q=${instance.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+              <td><a th:text="${instance.key}" th:href="|?q=${instance.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
               <td><a th:text="${instance.value}" th:href="|${instance.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
             </tr>
           </table>
@@ -59,12 +59,19 @@
           </select>
         </div>
 
-        <form class="form-group">
-          <label for="amount">Ile:</label><br>
-          <input type="text" id="amount" name="username"><br>
-          <label for="pwd">Password:</label><br>
-          <input type="password" id="pwd" name="pwd">
-        </form>
+        <div style="width:49%; display: inline-block;">
+          <form class="form-group">
+            <label for="amount">Ile:</label><br>
+            <input type="text" id="amount" name="amount"><br>
+          </form>
+        </div>
+        <div style="width:49%; display: inline-block;">
+          <form class="form-group">
+            <label for="amount">Ile:</label><br>
+            <input type="text" id="amount" name="amount"><br>
+          </form>
+        </div>
+
 
         <div class="form-group blu-margin" th:object="${user}">
           <select class="form-control" id="testOrder" name="testOrder">
@@ -76,9 +83,14 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <h3>Column 3</h3>        
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        <div class="form-group blu-margin">
+          <select class="form-control" id="currencies" name="currencies">
+              <option value="">Wybierz se pan</option>
+              <option th:each="inst : ${currencies}"
+                      th:value="${inst.value.numOfData}"
+                      th:text="${inst.key} + ' = ' + ${inst.value.numOfData}"></option>
+          </select>
+        </div>
       </div>
     </div>
 
