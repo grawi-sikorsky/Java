@@ -3,8 +3,13 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 @Controller
 public class RatesController {
@@ -13,13 +18,25 @@ public class RatesController {
   RatesService ratesService;
   
   // HOME
-  @RequestMapping(method={RequestMethod.GET, RequestMethod.POST})
+  @RequestMapping(value="/", method={RequestMethod.GET})
   public String showRates(Model mdl)
   {
     ratesService.getRatesFromAPI();
     //System.out.println(ratesService.getWaluty()); 
 
     mdl.addAttribute("waluty", ratesService.data.getRates());
+    mdl.addAttribute("basecurrency", ratesService.getBaseCurrency() );
+    return "home";
+  }
+
+  @RequestMapping(value="/", method = {RequestMethod.POST})
+  public String searchForCurrency(@RequestParam(value = "q", required = false) String szukaj, Model mdl)
+  {
+    mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
+    mdl.addAttribute("waluty", ratesService.findCurrency(szukaj));
+    System.out.println("SYSYSYSYSYSYYS");
+    
+    //System.out.println(ratesService.findCurrency("BTC"));
     return "home";
   }
 

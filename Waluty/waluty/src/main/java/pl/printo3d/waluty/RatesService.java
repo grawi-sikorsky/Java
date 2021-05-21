@@ -1,7 +1,11 @@
 ﻿package pl.printo3d.waluty;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,11 +37,30 @@ public class RatesService {
 
   public String getRateFromCur(HashMap<String,String> map, String searchKey)
   {
+    System.out.println("FOUND" + data.getRates().get(searchKey));
     return data.getRates().get(searchKey);
   }
+
+  public LinkedHashMap<String,String> findCurrency(String search)
+  {
+    LinkedHashMap <String,String> o = new LinkedHashMap();
+  
+    o.put(search.toUpperCase(), data.getRates().get(search.toUpperCase()));
+    return o;
+  }
+
   public String getWaluty()
   {
-    //data.getRates().entrySet().forEach(keys -> System.out.println(keys.getKey()));
-    return data.getRates().entrySet().stream().collect(Collectors.toList()).toString(); // .forEach(e -> e.getKey().toString()).get();
+    return data.getRates().entrySet().stream().collect(Collectors.toList()).toString();
+  }
+
+  public String getFilteredRates(String lookfor)
+  {
+    return "a";
+  }
+
+  public String getBaseCurrency()
+  {
+    return data.getBase();
   }
 }

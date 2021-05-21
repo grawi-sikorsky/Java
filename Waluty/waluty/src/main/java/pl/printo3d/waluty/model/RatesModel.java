@@ -42,5 +42,5 @@ public class RatesModel
   }
   public void setBase(String base) {
     this.base = base;
-  } 
+  }
 }
