@@ -22,17 +22,21 @@ public class RatesController {
     ratesService.getRatesFromAPI();
     //System.out.println(ratesService.getWaluty()); 
 
-    mdl.addAttribute("waluty", ratesService.data.getRates());
+    mdl.addAttribute("waluty", ratesService.rates.getRates());
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency() );
     mdl.addAttribute("currencies", ratesService.getWalutyBasedOnBaseCurrency() );
+    //mdl.addAttribute("wynik", ratesService.wynik());
+    //mdl.addAttribute("currnames", ratesService.getCurrNames());
+//    ratesService.getCurrNames();
     return "home";
   }
 
   @RequestMapping(value="/", method = {RequestMethod.POST})
-  public String searchForCurrency(@RequestParam(value = "q", required = false) String szukaj, Model mdl)
+  public String searchForCurrency(@RequestParam(value = "q", required = false) String szukaj, @RequestParam(value = "wynik", required = false) String swynik, Model mdl)
   {
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
     mdl.addAttribute("waluty", ratesService.findCurrency(szukaj));
+    mdl.addAttribute("wynik", ratesService.wynik(swynik));
     System.out.println("SYSYSYSYSYSYYS");
     
     //System.out.println(ratesService.findCurrency("BTC"));

@@ -17,12 +17,88 @@
     
   <div class="container">
     <div class="row">
+
+      <div class="col-sm-9">
+        
+        <h3 style="text-align: center;">Co waść chcesz?</h3>
+
+
+        <div style="width:25%; display: inline-block;">
+          <form class="form-group" method="POST" style="display: inline-block;">
+            <label for="amount">Ile:</label><br>
+            <input type="text" class="form-control" id="amount" name="wynik" style="display: inline-block;"><br>
+          </form>
+        </div>
+        <div style="width:37%; display: inline-block;">
+          <div class="form-group blu-margin" method="POST">
+            <label for="amount">Z:</label><br>
+            <select class="form-control"  id="dropOperator">
+            <option value="0">Wybierz se pan</option>
+            <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
+            </select>
+          </div>
+        </div>
+        <div style="width:37%; display: inline-block;">
+          <div class="form-group blu-margin" method="POST">
+            <label for="amount">Na:</label><br>
+            <select class="form-control"  id="dropOperator">
+            <option value="0">Wybierz se pan</option>
+            <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
+            </select>
+          </div>
+        </div>
+
+        <div style="width:100%; height: 100px; text-align: center;">
+          <a th:text="${wynik}">  </a>
+        </div>
+
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-success active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Kup
+          </label>
+          <label class="btn btn-danger">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Sprzedaj
+          </label>
+        </div>
+
+        <div class="form-group blu-margin" th:object="${user}">
+          <select class="form-control" id="testOrder" name="testOrder">
+              <option value="">Wybierz se pan</option>
+              <option th:each="instance : ${waluty}"
+                      th:value="${instance.value}"
+                      th:text="${instance.key}+' = '+${instance.value}"></option>
+          </select>
+        </div>
+
+        <p></p>
+        <p>Wybierz Pan cos:</p>
+        <div class="form-group blu-margin">
+          <select class="form-control"  id="dropOperator">
+          <option value="0">Wybierz se pan</option>
+          <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
+          </select>
+        </div>
+
+      </div>
+
+
+
       <div class="col-sm-3">
+
         <h3>Twoja waluta:</h3>
         <div class="form-group blu-margin">
           <select class="form-control"  id="dropOperator">
           <option th:value="${basecurrency}" th:text="${basecurrency}">ooo</option>
           </select>
+        </div>
+
+        <div class="list-group" style="max-height: 400px; overflow: auto;">
+          <table>
+            <tr th:each="inst : ${currencies}" style="cursor: pointer" th:key="${inst.key}" onclick="rowClicked(this.getAttribute('key'))">
+              <td><a th:text="${inst.key}" th:href="|?q=${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+              <td><a th:text="${inst.value} + ' $'" th:href="|${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+            </tr>
+          </table>
         </div>
 
         <form class="form-group" method="POST">
@@ -37,60 +113,17 @@
               <td><a th:text="${instance.value}" th:href="|${instance.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
             </tr>
           </table>
-          </div>
-      </div>
-      <div class="col-sm-6">
-        <h3 style="text-align: center;">Co waść chcesz?</h3>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-success active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Kup
-          </label>
-          <label class="btn btn-danger">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Sprzedaj
-          </label>
         </div>
 
-        <p></p>
-        <p>Wybierz Pan cos:</p>
-        <div class="form-group blu-margin">
-          <select class="form-control"  id="dropOperator">
-          <option value="0">Wybierz se pan</option>
-          <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
-          </select>
+        <div class="list-group" style="max-height: 400px; overflow: auto;">
+          <table>
+            <tr th:each="ins : ${currnames}" style="cursor: pointer" th:key="${ins.key}" onclick="rowClicked(this.getAttribute('key'))">
+              <td><a th:text="${ins.key}" th:href="|?q=${ins.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+              <td><a th:text="${ins.value}" th:href="|${ins.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+            </tr>
+          </table>
         </div>
 
-        <div style="width:49%; display: inline-block;">
-          <form class="form-group">
-            <label for="amount">Ile:</label><br>
-            <input type="text" id="amount" name="amount"><br>
-          </form>
-        </div>
-        <div style="width:49%; display: inline-block;">
-          <form class="form-group">
-            <label for="amount">Ile:</label><br>
-            <input type="text" id="amount" name="amount"><br>
-          </form>
-        </div>
-
-
-        <div class="form-group blu-margin" th:object="${user}">
-          <select class="form-control" id="testOrder" name="testOrder">
-              <option value="">Wybierz se pan</option>
-              <option th:each="instance : ${waluty}"
-                      th:value="${instance.value}"
-                      th:text="${instance.key}+' = '+${instance.value}"></option>
-          </select>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="form-group blu-margin">
-          <select class="form-control" id="currencies" name="currencies">
-              <option value="">Wybierz se pan</option>
-              <option th:each="inst : ${currencies}"
-                      th:value="${inst.value.numOfData}"
-                      th:text="${inst.key} + ' = ' + ${inst.value.numOfData}"></option>
-          </select>
-        </div>
       </div>
     </div>
 
