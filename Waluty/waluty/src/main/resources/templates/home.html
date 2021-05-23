@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/styles.css" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -23,57 +24,37 @@
         <h3 style="text-align: center;">Co waść chcesz?</h3>
 
         <div style="width:100%">
-          <form class="form-group" method="GET" style="display: inline-block;">
-            <label for="amount">Ile:</label><br>
-            <input type="text" class="form-control" id="amount" th:name="amountToCalc" value="1" style="display: inline-block;  width:25%"><br>
-
-            <label for="basecurrency">Z:</label><br>
-            <select class="form-control"  id="basecurrency" style="width:37%; display: inline-block;">
-              <option th:value="${basecurrency}" th:text="${basecurrency}" th:name="base" th:object="${base}">ooo</option>
-            </select>
-
-            <label for="targetcurrency">Na:</label><br>
-            <select class="form-control"  id="targetcurrency" style="width:37%; display: inline-block;">
-            <option value="0">Wybierz se pan</option>
-            <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}" th:name="tar"></option>
-            </select>
-
-            <input type="submit"/>
-
-
+          <form class="form-group" id="calc" method="GET">
+            <div style="display: inline-block;  width:25%"> 
+              <label for="amountToCalc">Ile:</label>
+              <input type="text" class="form-control" id="amountToCalc" th:name="amountToCalc" th:value="${amountToCalc}">
+            </div>
+            <div style="display: inline-block; width:37%;">
+              <label for="base">Z:</label>
+              <select  class="form-control" form="calc" name="base" id="base">
+                <option th:value="${basecurrency}" th:text="${basecurrency}" th:name="base" th:action="base">ooo</option>
+              </select>
+            </div>
+            <div style="display: inline-block; width:37%;">
+              <label for="tar">Na:</label>
+              <select class="form-control" form="calc" name="tar" id="tar">
+                <option th:value="${pickedCurrency}" th:text="${pickedCurrency}">Currency picked bifor</option>
+                <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}" th:name="tar"></option>
+              </select>
+            </div>
           </form>
+          <div style="text-align: right; width:100%">
+            <input form="calc" class="btn btn-success btn-lg" type="submit" value="Konwertuj"/>
+          </div>
         </div>
 
 
-        <div style="width:100%; height: 100px; text-align: center;" th:insert="fragments/wynik">
-        </div>
+        <div style="width:100%; height: 200px; text-align: center;" th:insert="fragments/wynik"></div>
 
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-success active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Kup
-          </label>
-          <label class="btn btn-danger">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Sprzedaj
-          </label>
-        </div>
+        <button class="btn btn-success btn-block"> Kup </button>
+        <button class="btn btn-danger btn-block" href=""> Sprzedaj </button>
 
-        <div class="form-group blu-margin" th:object="${user}">
-          <select class="form-control" id="testOrder" name="testOrder">
-              <option value="">Wybierz se pan</option>
-              <option th:each="instance : ${waluty}"
-                      th:value="${instance.value}"
-                      th:text="${instance.key}+' = '+${instance.value}"></option>
-          </select>
-        </div>
-
-        <p></p>
-        <p>Wybierz Pan cos:</p>
-        <div class="form-group blu-margin">
-          <select class="form-control"  id="dropOperator">
-          <option value="0">Wybierz se pan</option>
-          <option th:each="instance : ${waluty}" th:value="${instance.key}" th:text="${instance.key}"></option>
-          </select>
-        </div>
+        <!-- <div style="width:100%; height: 200px; text-align: center;" th:insert="fragments/yt"></div> -->
 
       </div>
 
