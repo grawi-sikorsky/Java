@@ -85,9 +85,24 @@ public class RatesService {
     return baseCurrencyValues;
   }
 
-  public String wynik(String swynik)
+  // (AmountToCalculate, baseCurrency, pickedCurrency)
+  public String CalculateExchange(String amountToCalculate, String baseCurrency, String pickedCurrency)
   {
+    // poczebujemy:
+    /*
+        wynik (picked currency) = amount * exRate (picked currency)
+    */
 
-    return swynik;
+    // 1. pociagnac "BTC" picked currency z exchange rates
+    String baseRate = rates.getRates().get(baseCurrency.toUpperCase());
+    String exRate = rates.getRates().get(pickedCurrency.toUpperCase());
+
+
+    BigDecimal wynik = new BigDecimal(amountToCalculate);
+    BigDecimal pickedCur = new BigDecimal(exRate);
+
+    wynik = wynik.multiply(pickedCur);
+
+    return wynik.toPlainString();
   }
 }
