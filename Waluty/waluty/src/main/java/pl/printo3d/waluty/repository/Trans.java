@@ -27,7 +27,6 @@ public class Trans {
     this.amountExchanged = amountExchanged;
     this.date = date;
   }
-  }
 
 
   public Long getId() {

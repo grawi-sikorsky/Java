@@ -1,6 +1,10 @@
 ﻿package pl.printo3d.waluty;
 
-import org.apache.tomcat.util.http.parser.MediaType;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.printo3d.waluty.repository.Trans;
+import pl.printo3d.waluty.repository.TransRepo;
+import pl.printo3d.waluty.repository.TransactionComponent;
+
 
 
 @Controller
 public class RatesController {
+
+  @Autowired
+  private TransRepo transRepo;
 
   @Autowired
   RatesService ratesService;
@@ -93,5 +104,19 @@ public class RatesController {
     //System.out.println(ratesService.findCurrency("BTC"));
     return "home";
   }
+
+  @RequestMapping(value="/", method=RequestMethod.POST, params = "kuppan")
+  public String kupPan(@RequestParam String kuppan) 
+  {
+
+    LocalTime loc = LocalTime.now();
+
+    Trans transakszyn = new Trans("USD", "BTC", "10", loc.toString() );
+    transRepo.save(transakszyn);
+
+    System.out.println(kuppan);
+    return "home";
+  }
+  
 
 }
