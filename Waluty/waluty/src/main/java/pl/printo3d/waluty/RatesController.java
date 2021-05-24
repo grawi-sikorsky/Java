@@ -16,13 +16,16 @@ public class RatesController {
   @Autowired
   RatesService ratesService;
   String targetCode="";
+  String baseCode="";
+  String amount="";
   
   // HOME
   @RequestMapping(value="/", method={RequestMethod.GET})
   public String showRates(Model mdl)
   {
-    //ratesService.getRatesFromAPI();
-    //System.out.println(ratesService.getWaluty()); 
+    targetCode = "PLN";
+    baseCode = "USD";
+    amount = "1";
 
     mdl.addAttribute("waluty", ratesService.rates.getRates());
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
@@ -33,9 +36,7 @@ public class RatesController {
     mdl.addAttribute("amountCalculated", ratesService.CalculateExchange("1", "USD", "PLN"));
     mdl.addAttribute("pickedCurrency", "PLN");
 
-    //mdl.addAttribute("wynik", ratesService.wynik());
-    //mdl.addAttribute("currnames", ratesService.getCurrNames());
-//    ratesService.getCurrNames();
+    System.out.println("showRates()[home] GET: "+amount+" "+baseCode+" "+targetCode);
     return "home";
   }
 
@@ -43,14 +44,26 @@ public class RatesController {
   public String searchForCurrency(@RequestParam(value = "q", required = false) String szukaj, Model mdl)
   {
     targetCode = szukaj;
+
     mdl.addAttribute("waluty", ratesService.findCurrency(szukaj));
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
     mdl.addAttribute("currencies", ratesService.getWalutyBasedOnBaseCurrency() );
 
     //mdl.addAttribute("wynik", ratesService.wynik(swynik));
-    System.out.println("REQ1");
+    System.out.println("searchForCurrency() POST: "+szukaj);
     
     //System.out.println(ratesService.findCurrency("BTC"));
+    return "home";
+  }
+
+  // NIEUZYWANE JUZ
+  @RequestMapping(value = "/", method = {RequestMethod.POST}, params = "pick")
+  public String pick(@RequestParam(value="pick", required = true) String pick, Model mdl)
+  {
+    jakiswynik(amount,baseCode,pick,mdl);
+
+    System.out.println("pick() POST: "+pick);
+
     return "home";
   }
 
@@ -60,6 +73,10 @@ public class RatesController {
                             @RequestParam(value = "tar", required = true) String tar,
                             Model mdl)
   {
+    targetCode = tar;
+    baseCode = base;
+    amount = amountToCalc;
+
     mdl.addAttribute("waluty", ratesService.rates.getRates());
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
     mdl.addAttribute("currencies", ratesService.getWalutyBasedOnBaseCurrency() );
@@ -71,7 +88,7 @@ public class RatesController {
     mdl.addAttribute("pickedCurrency", tar.toUpperCase());
 
 
-    System.out.println("REQ2");
+    System.out.println("jakiswynik() GET: "+amountToCalc+" "+base+" "+tar);
     
     //System.out.println(ratesService.findCurrency("BTC"));
     return "home";

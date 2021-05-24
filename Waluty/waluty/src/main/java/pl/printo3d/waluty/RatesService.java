@@ -74,7 +74,7 @@ public class RatesService {
   // zwraca same nazwy kodowe walut bez rate ?? [w sumie do wywalenia, mozna chyba zwracac glowna mape i wyswietlac tylko klucz zamiast klucza z wartoscia] - TODO: sprawdzic!
   public String getCurrNames()
   {
-    names.getCode().entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
+    //names.getCode().entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
     return names.getCode().entrySet().stream().collect(Collectors.toList()).toString();
   }
 
@@ -99,7 +99,7 @@ public class RatesService {
       baseCurrencyValues.put(mapEntry.getKey(), temp.toPlainString());
     }
 
-    baseCurrencyValues.entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
+    //baseCurrencyValues.entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
   
     return baseCurrencyValues;
   }

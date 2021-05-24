@@ -12,7 +12,6 @@ public class RatesModel
 
 
   public LinkedHashMap<String, String> getRates() {
-    rates.entrySet().forEach(e-> System.out.println(e.getKey() + " " + e.getValue()));
 		return rates;
 	}
 	public void setRates(LinkedHashMap<String, String> rates) {
