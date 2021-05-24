@@ -71,9 +71,9 @@
 
         <div class="list-group" style="max-height: 400px; overflow: auto;">
           <table>
-            <tr th:each="inst : ${currencies}" style="cursor: pointer" th:key="${inst.key}" onclick="rowClicked(this.getAttribute('key'))">
-              <td><a th:text="${inst.key}" th:href="|?q=${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
-              <td><a th:text="${inst.value} + ' $'" th:href="|${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;"></a></td>
+            <tr th:each="inst : ${currencies}" style="cursor: pointer" th:key="${inst.key}" method="POST" onclick="rowClicked(this.getAttribute('key'))">
+              <td><a th:text="${inst.key}" th:href="|?q=${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;" method="POST"></a></td>
+              <td><a th:text="${inst.value} + ' $'" th:href="|${inst.key}|" class="list-group-item list-group-item-action list-group-item-primary" style="padding: 1px 10px;" method="POST"></a></td>
             </tr>
           </table>
         </div>

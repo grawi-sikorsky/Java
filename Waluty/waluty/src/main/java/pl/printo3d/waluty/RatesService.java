@@ -31,7 +31,7 @@ public class RatesService {
       System.out.println("Nie udalo sie odczytac danych z API");
     }
   }
-
+  
   public void getRatesFromAPI()
   {
     //StringBuilder builder = new StringBuilder();

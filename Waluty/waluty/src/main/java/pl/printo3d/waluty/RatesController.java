@@ -15,6 +15,7 @@ public class RatesController {
 
   @Autowired
   RatesService ratesService;
+  String targetCode="";
   
   // HOME
   @RequestMapping(value="/", method={RequestMethod.GET})
@@ -41,6 +42,7 @@ public class RatesController {
   @RequestMapping(value="/", method = {RequestMethod.POST}, params = "q")
   public String searchForCurrency(@RequestParam(value = "q", required = false) String szukaj, Model mdl)
   {
+    targetCode = szukaj;
     mdl.addAttribute("waluty", ratesService.findCurrency(szukaj));
     mdl.addAttribute("basecurrency", ratesService.getBaseCurrency());
     mdl.addAttribute("currencies", ratesService.getWalutyBasedOnBaseCurrency() );
