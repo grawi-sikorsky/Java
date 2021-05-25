@@ -117,6 +117,13 @@ public class RatesController {
     System.out.println(kuppan);
     return "home";
   }
+
+  @RequestMapping(value="/login", method=RequestMethod.GET)
+  public String loginpejdz()
+  {
+
+    return "login";
+  }
   
 
 }
