@@ -2,6 +2,7 @@
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -109,7 +110,7 @@ public class RatesController {
   public String kupPan(@RequestParam String kuppan) 
   {
 
-    LocalTime loc = LocalTime.now();
+    LocalDateTime loc = LocalDateTime.now();
 
     Trans transakszyn = new Trans("USD", "BTC", "10", loc.toString() );
     transRepo.save(transakszyn);

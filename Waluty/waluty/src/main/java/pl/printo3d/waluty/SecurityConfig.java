@@ -29,7 +29,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     http.authorizeRequests()
     .antMatchers("/login").permitAll()
-    .anyRequest().permitAll(); //.hasRole("ADMIN");
+    .antMatchers("/").permitAll()
+    .anyRequest().permitAll() //.hasRole("ADMIN");
+
+    .and()
+      .formLogin()
+      .loginPage("/login.html")
+      .loginProcessingUrl("/perform_login")
+      .defaultSuccessUrl("/homepage.html", true)
+      .failureUrl("/login.html?error=true")
+      .and()
+      .logout()
+      .logoutUrl("/perform_logout")
+      .deleteCookies("JSESSIONID");
+
+
+    http.csrf().disable();
     
   }
 

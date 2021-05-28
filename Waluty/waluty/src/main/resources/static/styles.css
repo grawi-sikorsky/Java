@@ -1,0 +1,25 @@
+
+
+.wynikbasecurrency{
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 100;
+  color: bisque!important;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+.container-fluid{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.loginbtn{
+  float: right;
+  margin: 10px;
+}
+
+.headerimg{
+  width: 500px;
+}
