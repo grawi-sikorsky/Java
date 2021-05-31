@@ -1,6 +1,7 @@
-﻿package pl.printo3d.test3;
+package pl.printo3d.test3;
 
 public class UserModel {
+
   private int id;
   private String name;
   private String username;
@@ -45,7 +46,5 @@ public class UserModel {
 
   public void setWebsite(String website) {
     this.website = website;
-  } 
-
-  
+  }
 }

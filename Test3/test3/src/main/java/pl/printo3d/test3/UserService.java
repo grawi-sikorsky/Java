@@ -1,38 +1,35 @@
-﻿package pl.printo3d.test3;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+package pl.printo3d.test3;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
-  UserService()
-  {
+  private static final String TODOS_URI = "https://jsonplaceholder.typicode.com/todos";
+  private static final String USERS_URI = "https://jsonplaceholder.typicode.com/users";
+
+  private final List<TodoModel> todos;
+  private final List<UserModel> users;
+
+  UserService() {
     // Fetch from 3rd party API; configure fetch
-    RequestHeadersSpec<?> spec = WebClient.create().
-    get().uri("https://jsonplaceholder.typicode.com/todos");
+    RestTemplate restTemplate = new RestTemplate();
 
     // do fetch and map result
-    todos = spec.retrieve().toEntityList(TodoModel.class).block().getBody();
-
-    RequestHeadersSpec<?> uspec = WebClient.create().
-    get().uri("https://jsonplaceholder.typicode.com/users");
-
-    users = uspec.retrieve().toEntityList(UserModel.class).block().getBody();
+    todos = Arrays.asList(Objects.requireNonNull(restTemplate.getForEntity(TODOS_URI, TodoModel[].class).getBody()));
+    users = Arrays.asList(Objects.requireNonNull(restTemplate.getForEntity(USERS_URI, UserModel[].class).getBody()));
 
     // Zdaza sie konekszyn tajmaut - trzeba zrobic jakies zabezpiecznie
   }
-
-  private List<TodoModel> todos;
-  private List<UserModel> users;
-
-  private WebClient webClient = WebClient.create("https://jsonplaceholder.typicode.com/");
 
   public Integer getUsersCount()
   {
@@ -42,85 +39,50 @@ public class UserService {
   public List<UserModel> getAllUsers()
   {
     return users;
-  }  
+  }
 
-  public Integer getAllTodosCount() 
+  public Integer getAllTodosCount()
   {
     return todos.size();
   }
 
-  public List<TodoModel> getAllTodos()
-  {
+  public List<TodoModel> getAllTodos() {
     System.out.println("Feczujemy wszystkie TODOS z jsonplaceholder..");
-    System.out.println(String.format("...otrzymano %d obiektow.", todos.size()));
+    System.out.printf("...otrzymano %d obiektow.%n", todos.size());
 
-    int countTrue=0;
-    for(TodoModel todo : todos)
-    {
-      if(todo.isCompleted() == true)
-      {
-        System.out.println("userID: " + todo.getUserId() + " TodoID: " + todo.getId() + " is Completed?: " + todo.isCompleted());
-        countTrue++;
-      }
-    }
-    System.out.println("COMPLETED TASKS: " + countTrue + " ze wszystkich: " + todos.size());
+    long completedCount = todos.stream().filter(TodoModel::isCompleted).count();
+    System.out.println("COMPLETED TASKS: " + completedCount + " ze wszystkich: " + todos.size());
 
     return todos;
   }
 
-  public UserModel getUser(Integer uid)
-  {
-    UserModel userModel = users.get(uid-1); // user id sa od 1 w gore...
-
-    return userModel;
+  public UserModel getUser(Integer uid) {
+    return users.get(uid - 1);
   }
 
-  public String getUserCompleteTodos(int uid)
-  {
-    List<TodoModel> userFiltered = 
-    todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
-    Integer tododone=0; // ilosc wykonanych todos
-    String response="";
+  public String getUserCompleteTodos(int uid) {
 
-    for (TodoModel tm : userFiltered) 
-    {
-      //userFiltered.stream().filter(comp->comp.isCompleted());
-      if(tm.isCompleted() == true) tododone++;
-    }
+    List<TodoModel> userTodos = getUserTodos(uid);
 
-    response = "Zadania zakonczone : " + tododone + " / " + userFiltered.size();
-  
-    return response;
+    long todoDoneCount = userTodos.stream()
+            .filter(TodoModel::isCompleted)
+            .count();
+
+    return String.format("Zadania zakonczone : %d / %d", todoDoneCount, userTodos.size());
   }
+
   // w getUserTodos oraz getUserCompleteTodos jest wykonywany ten sam stream filtrujacy - poprawic
-  public List<TodoModel> getUserTodos(int uid)
-  {
-    List<TodoModel> odfiltrowane = 
-    todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
-    
-    return odfiltrowane;
+  public List<TodoModel> getUserTodos(int uid) {
+    return todos.stream()
+            .filter(c -> c.getUserId() == uid)
+            .collect(Collectors.toList());
   }
 
-  public Map<Integer,TodoModel> getUserTodoMap()
-  {
-    Map<Integer,TodoModel> mp = new HashMap<Integer,TodoModel>();
-    //List<String> tudus = todos.stream().filter(c -> c.getUserId()==uid).collect(Collectors.toList());
-    Integer tdcomplete;
-
-    for(TodoModel td : todos)
-    {
-      for(UserModel ur : users)
-      {
-        if(td.getUserId() == ur.getId())
-        {
-
-          System.out.println("ooooooo"+ur.getId());
-          mp.put(td.getUserId(), td);
-        }
-      }
+  public Map<Integer,List<TodoModel>> getUserTodoMap() {
+    MultiValueMap<Integer, TodoModel> mp = new LinkedMultiValueMap<>();
+    for (TodoModel td : todos) {
+      mp.add(td.getUserId(), td);
     }
     return mp;
   }
-
 }
-
