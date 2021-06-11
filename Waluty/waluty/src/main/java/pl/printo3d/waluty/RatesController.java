@@ -125,6 +125,14 @@ public class RatesController {
 
     return "login";
   }
+
+
+  @RequestMapping(value="/login", method=RequestMethod.POST)
+  public String loginakszyn()
+  {
+    System.out.println("LOGINNNNNN");
+    return "login";
+  }
   
 
 }
