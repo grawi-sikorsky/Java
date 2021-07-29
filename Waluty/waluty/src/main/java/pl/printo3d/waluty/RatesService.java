@@ -28,7 +28,7 @@ public class RatesService {
     }
     catch(Exception e)
     {
-      System.out.println("Nie udalo sie odczytac danych z API");
+      System.out.println("Nie udalo sie odczytac danych z API !!!!!!!!!!!!!!!!!!");
     }
   }
   
@@ -39,8 +39,8 @@ public class RatesService {
     //builder.append("http://printo3d.pl/latest.json");
     
     RestTemplate restTemplate = new RestTemplate();
-    rates = restTemplate.getForObject("http://printo3d.pl/latest.json", RatesModel.class);
-    names = restTemplate.getForObject("http://printo3d.pl/currencies.json", CurNamesModel.class);
+    rates = restTemplate.getForObject("https://printo3d.pl/latest.json", RatesModel.class);
+    names = restTemplate.getForObject("https://printo3d.pl/currencies.json", CurNamesModel.class);
     
     //return rates;
   }
