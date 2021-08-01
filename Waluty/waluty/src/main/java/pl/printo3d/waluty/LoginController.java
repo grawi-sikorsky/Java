@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.printo3d.waluty.repository.UserEntity;
-import pl.printo3d.waluty.repository.UserRepo;
 import pl.printo3d.waluty.repository.UserService;
 
 
@@ -15,7 +14,7 @@ import pl.printo3d.waluty.repository.UserService;
 public class LoginController {
 
   @Autowired
-  private UserService us;
+  private UserService userService;
 
   @RequestMapping(value="/login", method=RequestMethod.GET)
   public String logujemy()
@@ -40,17 +39,15 @@ public class LoginController {
         org.springframework.util.StringUtils.hasText(passwd) &&
         org.springframework.util.StringUtils.hasText(email) )
     {
-      UserEntity ue = new UserEntity(uname, passwd, email);
-      ue.setRole("KIEP");
-      us.addUser(ue);
+      UserEntity userEntity = new UserEntity(uname, passwd, email);
+
+      if (userService.addUser(userEntity) == true) return "login";
+      else return "register";
     }
     else
     {
       System.out.println("puste pola!");
       return "register";
     }
-
-    // link aktywacyjny?
-    return "login";
   }
 }

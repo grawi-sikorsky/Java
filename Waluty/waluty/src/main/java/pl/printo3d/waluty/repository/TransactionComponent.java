@@ -22,14 +22,5 @@ public class TransactionComponent {
   {
     TransEntity transik = new TransEntity("var1", "var2","var3","var4");
     transRepo.save(transik);
-  }
-
-  @EventListener(ApplicationReadyEvent.class)
-  public void updateUserInDB()
-  {
-    //long id = 1;
-    UserEntity usr = new UserEntity("username","pass","email");
-    userRepo.save(usr);
-  }
-  
+  }  
 }
