@@ -1,10 +1,6 @@
 ﻿package pl.printo3d.waluty;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.printo3d.waluty.repository.Trans;
+import pl.printo3d.waluty.repository.TransEntity;
 import pl.printo3d.waluty.repository.TransRepo;
-import pl.printo3d.waluty.repository.TransactionComponent;
 
 
 
@@ -47,6 +42,9 @@ public class RatesController {
     mdl.addAttribute("amountToCalc", "1");
     mdl.addAttribute("amountCalculated", ratesService.CalculateExchange("1", "USD", "PLN"));
     mdl.addAttribute("pickedCurrency", "PLN");
+
+    String username = "kiepek";
+    mdl.addAttribute("uname", username.toUpperCase());
 
     System.out.println("showRates()[home] GET: "+amount+" "+baseCode+" "+targetCode);
     return "home";
@@ -99,7 +97,6 @@ public class RatesController {
     mdl.addAttribute("amountCalculated", ratesService.CalculateExchange(amountToCalc, "USD", tar.toUpperCase()));
     mdl.addAttribute("pickedCurrency", tar.toUpperCase());
 
-
     System.out.println("jakiswynik() GET: "+amountToCalc+" "+base+" "+tar);
     
     //System.out.println(ratesService.findCurrency("BTC"));
@@ -112,27 +109,12 @@ public class RatesController {
 
     LocalDateTime loc = LocalDateTime.now();
 
-    Trans transakszyn = new Trans("USD", "BTC", "10", loc.toString() );
+    TransEntity transakszyn = new TransEntity("USD", "BTC", "10", loc.toString() );
     transRepo.save(transakszyn);
 
     System.out.println(kuppan);
     return "home";
   }
-
-  @RequestMapping(value="/login", method=RequestMethod.GET)
-  public String loginpejdz()
-  {
-
-    return "login";
-  }
-
-
-  @RequestMapping(value="/login", method=RequestMethod.POST)
-  public String loginakszyn()
-  {
-    System.out.println("LOGINNNNNN");
-    return "login";
-  }
-  
+ 
 
 }

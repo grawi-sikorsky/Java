@@ -31,27 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     http.authorizeRequests()
     .antMatchers("/login","/img/**","/css/**").permitAll()
-    .antMatchers("/").authenticated()
-    .anyRequest().hasRole("KIEP")
+    .antMatchers("/register", "/img/**","/css/**").permitAll()
+    .antMatchers("/").permitAll()
+    .anyRequest().hasRole("KIEP");
 
 
-    .and()
-      .formLogin().permitAll()
+    http.formLogin().permitAll()
       .loginPage("/login").permitAll()
-      .loginProcessingUrl("/perform_login")
-      .defaultSuccessUrl("/home", true)
-      .failureUrl("/login.html?error=true")
-      .permitAll()
+      .defaultSuccessUrl("/", true)
       .and()
       .logout().permitAll()
-      .logoutUrl("/perform_logout")
+      .logoutSuccessUrl("/")
       .deleteCookies("JSESSIONID");
-
 
     http.csrf().disable();
 
   }
-
-  
-  
 }

@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Trans {
+public class TransEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class Trans {
   String amountExchanged;
   String date;
 
-  public Trans() {
+  public TransEntity() {
   }
 
 
-  public Trans(String base, String target, String amountExchanged, String date) {
+  public TransEntity(String base, String target, String amountExchanged, String date) {
     this.base = base;
     this.target = target;
     this.amountExchanged = amountExchanged;

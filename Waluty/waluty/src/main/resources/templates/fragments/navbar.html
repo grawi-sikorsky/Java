@@ -1,0 +1,17 @@
+﻿<div class="navbar bg-dark navbar-dark">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="http://localhost:8080/">Home</a>
+    <a class="navbar-brand" href="http://localhost:8080/grzmi">Costam</a>
+    <a class="navbar-brand" href="#">Jeszczecos</a>
+    <div sec:authorize="hasRole('KIEP')">
+      <p class="loginbtn" th:value="${uname}" th:text="${uname}"></p>
+      <a class="loginbtn btn btn-success" th:href="@{/logout}">Logout</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+      <a class="loginbtn btn btn-success" th:href="@{/login}">Loguj waść</a>
+      <a class="loginbtn btn btn-primary" th:href="@{/register}">Rejestruj waść</a>
+    </div>
+  </div>
+</div>

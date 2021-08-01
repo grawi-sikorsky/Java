@@ -25,26 +25,27 @@
 
 
   <div class="container" style="width: 400px;">
-    <form method="POST" th:action="@{/login}" class="form-signin">
-      <h2 class="form-heading">Log in</h2>
+    <form method="POST" th:action="@{/register}" class="form-signin">
+      <h2 class="form-heading" style="text-align:center">Zarejestruj się</h2>
 
       <!-- Thymeleaf + Spring Security error display -->
       <div th:if="${param.error}" class="alert alert-danger">
-        Invalid username and password.
+        Nieprawidlowa nazwa uzytkownika lub haslo.
       </div>
 
       <div th:if="${param.logout}" class="alert alert-success">
-        You have been logged out.
+        Zostales wylogowany.
       </div>
 
 
       <div class="form-group ">
-        <span></span>
+        <div style="height:20px"> </div>
         <input id="username" name="username" type="text" class="form-control" placeholder="Username" autofocus="true" />
         <input id="password" name="password" type="password" class="form-control" placeholder="Password" />
-        <span></span>
+        <input id="email" name="email" type="text" class="form-control" placeholder="Email" />
+        <div style="height:20px"> </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Rejestracja</button>
       </div>
     </form>
 
@@ -52,9 +53,3 @@
 </body>
 
 </html>
-
-<script>
-  function rowClicked(value) {
-    location.href = "?pick=" + value;
-  }
-</script>

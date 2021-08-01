@@ -1,8 +1,6 @@
 package pl.printo3d.waluty.model;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class CurNamesModel {
 
