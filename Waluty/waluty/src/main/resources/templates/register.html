@@ -26,7 +26,7 @@
 
   <div class="container" style="width: 400px;">
     <form method="POST" th:action="@{/register}" class="form-signin">
-      <h2 class="form-heading" style="text-align:center">Zarejestruj się</h2>
+      <h2 class="form-heading" style="text-align:center; font-family: roboto;">Zarejestruj się</h2>
 
       <!-- Thymeleaf + Spring Security error display -->
       <div th:if="${param.error}" class="alert alert-danger">
@@ -45,7 +45,7 @@
         <input id="email" name="email" type="text" class="form-control" placeholder="Email" />
         <div style="height:20px"> </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Rejestracja</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Rejestracja</button>
       </div>
     </form>
 
