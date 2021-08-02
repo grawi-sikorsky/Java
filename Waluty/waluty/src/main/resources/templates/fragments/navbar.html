@@ -1,17 +1,39 @@
-﻿<div class="navbar bg-dark navbar-dark">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="http://localhost:8080/">Home</a>
-    <a class="navbar-brand" href="http://localhost:8080/grzmi">Costam</a>
-    <a class="navbar-brand" href="#">Jeszczecos</a>
-    <div sec:authorize="hasRole('KIEP')">
-      <p class="loginbtn" th:value="${uname}" th:text="${uname}"></p>
-      <a class="loginbtn btn btn-success" th:href="@{/logout}">Logout</a>
-    </div>
-    <div sec:authorize="isAnonymous()">
-      <a class="loginbtn btn btn-success" th:href="@{/login}">Loguj waść</a>
-      <a class="loginbtn btn btn-primary" th:href="@{/register}">Rejestruj waść</a>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <link rel="stylesheet" id="vc_font_awesome_5-css" href="../css/all.min.css" type="text/css" media="all">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet">  
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+
+</head>
+  <div class="navbar bg-dark navbar-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="http://localhost:8080/">Home</a>
+      <a class="navbar-brand" href="http://localhost:8080/grzmi">Costam</a>
+      <a class="navbar-brand" href="#">Jeszczecos</a>
+
+      <div class="userDropMenu" sec:authorize="hasAuthority('KIEP')">
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle " role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            <img class="userDropMenuImg" src="img/avatar_januszcoin.png">
+            <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <li class="dropdown-item"> <a href="#"><i class="fa fa-flag fa-2x pull-left"></i>Majne profajl</a></li>
+            <li class="dropdown-item"> <a href="#">Szmeterling</a></li>
+            <li class="dropdown-item"> <a href="#">Krankenwagen</a></li>
+            <li class="dropdown-item"> <a class="loginbtn btn btn-info" th:href="@{/logout}">Wychodzę bo nie zniesę</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div sec:authorize="isAnonymous()">
+        <a class="loginbtn btn btn-success" th:href="@{/login}">Loguj waść</a>
+        <a class="loginbtn btn btn-primary" th:href="@{/register}">Rejestruj waść</a>
+      </div>
     </div>
   </div>
-</div>
+</html>

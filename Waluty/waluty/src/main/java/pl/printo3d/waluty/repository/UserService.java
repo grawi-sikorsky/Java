@@ -1,25 +1,37 @@
 package pl.printo3d.waluty.repository;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 
   private UserRepo userRepo;
+
+  @Bean
+  public PasswordEncoder passwordEncoder() 
+  {
+      return new BCryptPasswordEncoder();
+  }
 
   @Autowired
   private PasswordEncoder pEncoder;
 
-
-  public UserService(UserRepo userRepo, PasswordEncoder pEncoder) {
+  public UserService(UserRepo userRepo) {
     this.userRepo = userRepo;
-    this.pEncoder = pEncoder;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return userRepo.findByUsername(username);
   }
 
   public boolean addUser(UserEntity userEntity)
@@ -29,21 +41,10 @@ public class UserService {
     userEntity.setRole("KIEP");
     userEntity.setPasswd(pEncoder.encode(userEntity.getPasswd()));
 
-    System.out.println("Checking if user exists");
-    List<UserEntity> userFromDB = userRepo.findByUsername(userEntity.username);
-
-    if(userFromDB.isEmpty() == true)
-    {
-      userRepo.save(userEntity);
-      return true;
-    }
-    else
-    { 
-      for (UserEntity ufdb : userFromDB) 
-      {
-        System.out.println(ufdb.getUsername());
-      }
-      return false;
-    }
+    //System.out.println("Checking if user exists");
+    //UserEntity userFromDB = userRepo.findByUsername(userEntity.username);
+  
+    userRepo.save(userEntity);
+    return true;
   }
 }

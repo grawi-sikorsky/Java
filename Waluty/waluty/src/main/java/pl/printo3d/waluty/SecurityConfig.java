@@ -1,27 +1,31 @@
 ﻿package pl.printo3d.waluty;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import pl.printo3d.waluty.repository.UserService;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-  @Bean
-  public PasswordEncoder passwordEncoder() 
-  {
-      return new BCryptPasswordEncoder();
+  private UserService uService;
+
+  @Autowired
+  public SecurityConfig(UserService uService) {
+    this.uService = uService;
   }
 
+  public SecurityConfig()
+  {
+    
+  }
+
+/*
   @Bean
   public UserDetailsService userDetailsService()
   {
@@ -33,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     return new InMemoryUserDetailsManager(userDetails);
   }
+*/
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception
+  {
+    auth.userDetailsService(uService);
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -41,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     .antMatchers("/login","/img/**","/css/**").permitAll()
     .antMatchers("/register", "/img/**","/css/**").permitAll()
     .antMatchers("/").permitAll()
-    .anyRequest().hasRole("KIEP");
+    .anyRequest().hasAuthority("KIEP");
 
 
     http.formLogin().permitAll()

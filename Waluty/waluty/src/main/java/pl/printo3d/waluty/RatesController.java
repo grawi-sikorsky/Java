@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.printo3d.waluty.repository.TransEntity;
 import pl.printo3d.waluty.repository.TransRepo;
+import pl.printo3d.waluty.repository.UserService;
 
 
 
@@ -19,6 +20,9 @@ public class RatesController {
 
   @Autowired
   private TransRepo transRepo;
+
+  @Autowired
+  private UserService uService;
 
   @Autowired
   RatesService ratesService;
@@ -42,9 +46,10 @@ public class RatesController {
     mdl.addAttribute("amountToCalc", "1");
     mdl.addAttribute("amountCalculated", ratesService.CalculateExchange("1", "USD", "PLN"));
     mdl.addAttribute("pickedCurrency", "PLN");
-
-    String username = "kiepek";
-    mdl.addAttribute("uname", username.toUpperCase());
+        
+    
+    //String username = uService.getUsername();
+    //mdl.addAttribute("uname", username.toUpperCase());
 
     System.out.println("showRates()[home] GET: "+amount+" "+baseCode+" "+targetCode);
     return "home";
