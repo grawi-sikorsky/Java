@@ -1,4 +1,4 @@
-﻿package pl.printo3d.waluty;
+﻿package pl.printo3d.waluty.controllers;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.printo3d.waluty.repository.TransEntity;
 import pl.printo3d.waluty.repository.TransRepo;
 import pl.printo3d.waluty.repository.UserService;
+import pl.printo3d.waluty.services.RatesService;
 
 
 

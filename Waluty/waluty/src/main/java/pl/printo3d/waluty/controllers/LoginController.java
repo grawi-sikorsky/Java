@@ -1,4 +1,4 @@
-package pl.printo3d.waluty;
+package pl.printo3d.waluty.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

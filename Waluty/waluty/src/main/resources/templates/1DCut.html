@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>1D Cutting Optimization</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" id="vc_font_awesome_5-css" href="../css/all.min.css" type="text/css" media="all">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="../css/styles.css" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav th:replace="fragments/navbar" xtra:strip-whitespace="shallow">Navbar tutaj</nav>
+  <!-- Navbar -->
+
+
+  <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
+    <div class=col-sm-4>
+
+      <div class="col-sm">
+        <label>Ilosc materialu:</label>
+        <input type="text" name="stockcount" id="stockcount" class="col-sm" placeholder="Ilosc materialu" autofocus="true">
+      </div>
+      <div class="col-sm">
+        <label>Dlugosc materialu:</label>
+        <input type="text" name="stocklen" id="stocklen" class="col-sm" placeholder="Dlugosc materiau">
+      </div>
+      <div class="col-sm">
+        <label>Ilosc elementow:</label>
+        <input type="text" name="pcscount" id="pcscount" class="col-sm" placeholder="Ilosc sztuk">
+      </div>
+      <div class="col-sm">
+        <label>Wymiary:</label>
+        <input type="text" name="pclength" id="pclength" class="col-sm" placeholder="Dlugosc">
+      </div>
+      <div class="col-sm">
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj </button>
+      </div>
+
+    </div>
+
+
+  </form>
+
+</body>
+
+</html>

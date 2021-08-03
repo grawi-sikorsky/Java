@@ -1,8 +1,7 @@
-﻿package pl.printo3d.waluty;
+﻿package pl.printo3d.waluty.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.bytebuddy.agent.builder.AgentBuilder.PoolStrategy;
 import pl.printo3d.waluty.repository.UserEntity;
 import pl.printo3d.waluty.repository.UserService;
 
@@ -23,7 +21,8 @@ public class ProfileController {
   @GetMapping("/profile")
   public String profil(Model mdl)
   {
-    UserEntity ue = (UserEntity) uService.loadUserByUsername("kloc");
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity ue = (UserEntity)uService.loadUserByUsername(((UserEntity)principal).getUsername());
     mdl.addAttribute("phone", ue.getPhone());
     mdl.addAttribute("website", ue.getWebsite());
 
@@ -36,16 +35,9 @@ public class ProfileController {
     @RequestParam(value = "website", required = false) String website,
     Model mdl )
   {
-    //1
-    // principal? zeby zlapac nazwe zalogowanego usera dynamicznie
-    UserEntity ue = (UserEntity) uService.loadUserByUsername("kloc");
-   
-    System.out.println( ue.getUsername() );
-    System.out.println( ue.getEmail() );
-    System.out.println( ue.getPhone() );
-    System.out.println( ue.getWebsite() );
-    System.out.println("-------------------");
-    
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    UserEntity ue = (UserEntity)uService.loadUserByUsername(((UserEntity)principal).getUsername());
+
     ue.setPhone(phone);
     ue.setWebsite(website);
     uService.updateUser(ue);

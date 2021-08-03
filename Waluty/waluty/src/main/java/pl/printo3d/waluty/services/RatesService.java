@@ -1,4 +1,4 @@
-﻿package pl.printo3d.waluty;
+﻿package pl.printo3d.waluty.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +16,7 @@ import pl.printo3d.waluty.model.RatesModel;
 @Service
 public class RatesService {
 
-  RatesModel rates = new RatesModel();         // Rate Model class
+  public RatesModel rates = new RatesModel();         // Rate Model class
   CurNamesModel names = new CurNamesModel();  // Currencies names Model class
   LinkedHashMap<String,String> baseCurrencyValues = new LinkedHashMap<>();  // Converted prices based on picked currency (only USD - fri api..)
 
