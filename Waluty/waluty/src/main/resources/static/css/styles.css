@@ -5,6 +5,11 @@
   color: bisque!important;
 }
 
+.navi{
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: lightgray;
+}
 .navbar {
   margin-bottom: 0px;
 }

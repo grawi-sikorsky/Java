@@ -1,7 +1,5 @@
 package pl.printo3d.waluty.repository;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +29,7 @@ public class UserService implements UserDetailsService{
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    //return userRepo.findByUsername(username);
     return userRepo.findByUsername(username);
   }
 
@@ -38,13 +37,26 @@ public class UserService implements UserDetailsService{
   {
     System.out.println("Adduser..");
 
+    // TODO: Ustawic role dynamicznie?
     userEntity.setRole("KIEP");
     userEntity.setPasswd(pEncoder.encode(userEntity.getPasswd()));
-
-    //System.out.println("Checking if user exists");
-    //UserEntity userFromDB = userRepo.findByUsername(userEntity.username);
   
     userRepo.save(userEntity);
+    return true;
+  }
+
+  public boolean updateUser(UserEntity userEntity)
+  {
+    System.out.println("Update User..");
+    
+    //1 sprawdzic czy user istnieje
+    //2 zmodyfikowac wpisy w db
+
+    //1
+    //userRepo.findByUsername(userEntity.getUsername())
+
+    userRepo.save(userEntity);
+
     return true;
   }
 }
