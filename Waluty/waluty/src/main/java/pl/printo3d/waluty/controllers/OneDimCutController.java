@@ -23,9 +23,25 @@ public class OneDimCutController {
     @RequestParam(value = "pclength", required = true) String pcLength  )
   {
 
+    nextFit(stockCount, stockLength, pcsCount, pcLength);
 
     return "1dcut";
   }
+
+  public Integer nextFit(String stockCount, String stockLength, String pcsCount, String pcLength)
+  {
+    Integer wynik=0;
+    //Integer stockCount=0;
+
+    // int ucina co po przecinku wiec dodajemy 1 i jest ideoloooo
+    wynik = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
+
+    System.out.println(wynik);
+
+    return wynik;
+  }
+
+
 }
 /*
 public static void binPacking(int[] a, int size, int n)
