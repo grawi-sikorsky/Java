@@ -23,6 +23,22 @@
   <!-- Navbar -->
 
 
+  <div class="row" id="addRowsHere">
+    <div class="col-md-4">
+        <div class="form-group label-floating">
+            <label class="control-label">Act</label>
+            <input type="text" class="form-control" v-model="act" >
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group label-floating">
+            <label class="control-label">Section </label>
+            <input type="text" class="form-control" v-model="section">
+        </div>
+    </div>
+</div>
+<button id="clickMe">Add row</button>
+
   <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
     <div class=col-sm-4>
 
@@ -45,12 +61,38 @@
       <div class="col-sm">
         <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj </button>
       </div>
+    </div>
+
+    <div class="col-sm-4">
+      <label> Ilosc potrzebnego materialu: </label><span th:text=" ${wynik}"></span>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="col-sm">
+        <label> Dostepna dlugosc pretow: </label><span th:text=" ${stockLen}"></span>
+      </div>
+      <div class="col-sm">
+        <label> Dostepna ilosc pretow: </label><span th:text=" ${stockPcs}"></span>
+      </div>
+      <div class="col-sm">
+        <label> Wymagane odcinki: </label><span th:text=" ${cuts}"></span>
+      </div>
+      <div class="col-sm">
+        <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
+          <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj </button>
+        </form>
+      </div>
+      <div class="col-sm">
+        <label> --------------------- </label></span>
+      </div>
+      <div class="col-sm">
+        <label> Wyniki: </label></span>
+        <option th:each="instance : ${wyniki}" th:value="${instance}" th:text="${instance}" th:name="wyniki"></option>
+      </div>
+      
 
     </div>
 
-    <div class="col-sm-6">
-      <label> Ilosc potrzebnego materialu: </label><span th:text="${wynik}"></span>
-    </div>
 
 
   </form>
@@ -58,3 +100,31 @@
 </body>
 
 </html>
+
+<script>
+  document.getElementById("clickMe").onclick = function () { 
+          //first div
+          var newDivCol = document.createElement("div");
+          newDivCol.setAttribute("class","col-md-4");
+          //second div
+          var newDivForm = document.createElement("div");
+          newDivForm.setAttribute("class","form-group label-floating");
+          newDivCol.appendChild(newDivForm);
+  
+          //label
+          var newlabel = document.createElement("label");
+          newlabel.setAttribute("class","control-label");
+          newlabel.innerHTML = "Here goes the text";
+          newDivForm.appendChild(newlabel);
+  
+          //input
+          var newInput = document.createElement("input");
+          newInput.setAttribute("type","text");
+          newInput.setAttribute("class","form-control");
+          newInput.setAttribute("v-model","act");
+          newDivForm.appendChild(newInput);
+  
+          var element = document.getElementById("addRowsHere");
+          element.appendChild(newDivCol);
+  };
+  </script>

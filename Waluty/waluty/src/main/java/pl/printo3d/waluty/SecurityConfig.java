@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     http.authorizeRequests()
     .antMatchers("/login","/img/**","/css/**").permitAll()
     .antMatchers("/register", "/img/**","/css/**").permitAll()
+    .antMatchers("/1dcut").permitAll()
     .antMatchers("/").permitAll()
     .anyRequest().hasAuthority("KIEP");
 

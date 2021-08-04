@@ -6,26 +6,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.printo3d.waluty.services.OneDCutterService;
+
 @Controller
 public class OneDimCutController {
+
+  private OneDCutterService oneDCutterService = new OneDCutterService();
 
   @RequestMapping(value="/1dcut", method={RequestMethod.GET})
   public String OneDimCutControllerShow()
   {
-
     return "1dcut";
   }
 
   @RequestMapping(value="/1dcut", method={RequestMethod.POST})
-  public String OneDimCutControllerRun(
-    @RequestParam(value = "stockcount", required = true) String stockCount,
-    @RequestParam(value = "stocklen", required = true) String stockLength,
-    @RequestParam(value = "pcscount", required = true) String pcsCount,
-    @RequestParam(value = "pclength", required = true) String pcLength, Model mdl  )
+  public String ReqStockRun(
+    @RequestParam(value = "stockcount", required = false) String stockCount,
+    @RequestParam(value = "stocklen", required = false) String stockLength,
+    @RequestParam(value = "pcscount", required = false) String pcsCount,
+    @RequestParam(value = "pclength", required = false) String pcLength, Model mdl  )
   {
+    //nextFit(stockCount, stockLength, pcsCount, pcLength);
+    //mdl.addAttribute("wynik", nextFit(stockCount, stockLength, pcsCount, pcLength));
 
-    nextFit(stockCount, stockLength, pcsCount, pcLength);
-    mdl.addAttribute("wynik", nextFit(stockCount, stockLength, pcsCount, pcLength));
+    // liczymy
+    mdl.addAttribute("stockLen", oneDCutterService.getStockLen());
+    mdl.addAttribute("stockPcs", oneDCutterService.getStockPcs());
+    mdl.addAttribute("cuts", oneDCutterService.getCuts());
+
+    oneDCutterService.SortReverse();
+    //oneDCutterService.firstFit(parts, stockPcs, stockLen);
+    oneDCutterService.firstFit();
+
+    mdl.addAttribute("wyniki", oneDCutterService.getResults());
 
     return "1dcut";
   }
@@ -42,9 +55,9 @@ public class OneDimCutController {
 
     return wynik;
   }
-
-
 }
+
+
 /*
 public static void binPacking(int[] a, int size, int n)
 {
