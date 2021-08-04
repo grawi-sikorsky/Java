@@ -1,6 +1,7 @@
 ﻿package pl.printo3d.waluty.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +21,11 @@ public class OneDimCutController {
     @RequestParam(value = "stockcount", required = true) String stockCount,
     @RequestParam(value = "stocklen", required = true) String stockLength,
     @RequestParam(value = "pcscount", required = true) String pcsCount,
-    @RequestParam(value = "pclength", required = true) String pcLength  )
+    @RequestParam(value = "pclength", required = true) String pcLength, Model mdl  )
   {
 
     nextFit(stockCount, stockLength, pcsCount, pcLength);
+    mdl.addAttribute("wynik", nextFit(stockCount, stockLength, pcsCount, pcLength));
 
     return "1dcut";
   }
