@@ -14,36 +14,15 @@ public class OneDCutterService {
 
   public List<String> stockLen = new ArrayList<String>(Arrays.asList("1000"));
   public List<String> stockPcs = new ArrayList<String>(Arrays.asList("10"));
+  public List<String> pcsLength = new ArrayList<String>(Arrays.asList("100","200"));
+  public List<String> pcs = new ArrayList<String>(Arrays.asList("5","2"));
   public List<Double> partsList = new ArrayList<Double>(Arrays.asList(
     320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,
     320.0,350.0,370.0,320.0,350.0,370.0,260.0, 310.0));
 
   public List<String> wyniki = new ArrayList<String>();
 
-  public List<String> getStockLen() {
-    return stockLen;
-  }
-
-  public void setStockLen(List<String> stockLen) {
-    this.stockLen = stockLen;
-  }
-
-  public List<String> getStockPcs() {
-    return stockPcs;
-  }
-
-  public void setStockPcs(List<String> stockPcs) {
-    this.stockPcs = stockPcs;
-  }
-
-  public List<Double> getCuts() {
-    return partsList;
-  }
-
-  public void setCuts(List<Double> partsList) {
-    this.partsList = partsList;
-  }
-
+  // Sortowanie odwrotne
   public List<Double> SortReverse()
   {
     Collections.sort(partsList);
@@ -52,14 +31,11 @@ public class OneDCutterService {
     return partsList;
   }
 
+  // 1. Pierwsza metoda rozwiazania problemu 
   public List<StockPiece> firstFit(/* List<String> parts, List<String> stockPcs, List<String> stockLen */)
   {
     // flush workpieces:
     workPieces.clear();
-
-    Integer stockCount;
-    Double stockLen=1000.0;
-    Double stockPcs=100.0;
     
     for (Double part : partsList)
     {
@@ -80,19 +56,18 @@ public class OneDCutterService {
         }
       }
     }
-
     return workPieces;
   }
 
+  // 2. Druga metoda rozwiazania problemu
   public List<StockPiece> bestFit()
   {
     workPieces.clear();
 
-    
-
     return workPieces;
   }
 
+  // Wypisuje rezultat obliczen
   public List<String> getResults()
   {
     List<String> result = new ArrayList<String>();
@@ -115,10 +90,11 @@ public class OneDCutterService {
     return result;
   }
 
+  // Tworzy liste elementow do ciecia na podstawie wpisanych danych
   public List<Double> makePartListFromInputs( List<String> pcsCnt, List<String> pcLen )
   {
     partsList.clear();
-    
+
     for(int i=0; i < pcsCnt.stream().count(); ++i)
     {
       for (int j=0; j < Integer.parseInt(pcsCnt.get(i)); ++j)
@@ -127,6 +103,48 @@ public class OneDCutterService {
       }
     }
     return partsList;
+  }
+
+  // Oblicza ilosc potrzebnych elementow do wykonania zadania
+  public Integer calculateNeededStock(String stockCount, String stockLength, String pcsCount, String pcLength)
+  {
+    Integer wynik=0;
+
+    // int ucina co po przecinku wiec dodajemy 1 i jest ideoloooo
+    wynik = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
+
+    System.out.println(wynik);
+
+    return wynik;
+  }
+
+
+
+
+
+  
+  public List<String> getStockLen() {
+    return stockLen;
+  }
+
+  public void setStockLen(List<String> stockLen) {
+    this.stockLen = stockLen;
+  }
+
+  public List<String> getStockPcs() {
+    return stockPcs;
+  }
+
+  public void setStockPcs(List<String> stockPcs) {
+    this.stockPcs = stockPcs;
+  }
+
+  public List<Double> getCuts() {
+    return partsList;
+  }
+
+  public void setCuts(List<Double> partsList) {
+    this.partsList = partsList;
   }
   
 }

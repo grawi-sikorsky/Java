@@ -18,8 +18,10 @@ public class OneDimCutController {
   private OneDCutterService oneDCutterService = new OneDCutterService();
 
   @RequestMapping(value="/1dcut", method={RequestMethod.GET})
-  public String OneDimCutControllerShow()
+  public String OneDimCutControllerShow(Model mdl)
   {
+    mdl.addAttribute("pclength", oneDCutterService.pcsLength);
+    mdl.addAttribute("pcscount", oneDCutterService.pcs);
     return "1dcut";
   }
 
@@ -28,13 +30,14 @@ public class OneDimCutController {
     @RequestParam(value = "stockcount", required = false) String stockCount,
     @RequestParam(value = "stocklen", required = false) List<String> stockLength,
     @RequestParam(value = "pcscount", required = false) List<String> pcsCount,
-    @RequestParam(value = "pclength", required = false) String pcLength, Model mdl  )
+    @RequestParam(value = "pclength", required = false) List<String> pcLength, Model mdl  )
   {
     System.out.println(pcsCount);
-    System.out.println(stockLength);
+    System.out.println(pcLength);
 
-    oneDCutterService.makePartListFromInputs(pcsCount, stockLength);
-
+    oneDCutterService.makePartListFromInputs(pcsCount, pcLength);
+    mdl.addAttribute("pclength", pcLength);
+    mdl.addAttribute("pcscount", pcsCount);
 
 
     // liczymy
@@ -51,18 +54,6 @@ public class OneDimCutController {
     return "1dcut";
   }
 
-  public Integer nextFit(String stockCount, String stockLength, String pcsCount, String pcLength)
-  {
-    Integer wynik=0;
-    //Integer stockCount=0;
-
-    // int ucina co po przecinku wiec dodajemy 1 i jest ideoloooo
-    wynik = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
-
-    System.out.println(wynik);
-
-    return wynik;
-  }
 }
 
 
