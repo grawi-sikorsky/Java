@@ -1,5 +1,9 @@
 ﻿package pl.printo3d.waluty.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +26,16 @@ public class OneDimCutController {
   @RequestMapping(value="/1dcut", method={RequestMethod.POST})
   public String ReqStockRun(
     @RequestParam(value = "stockcount", required = false) String stockCount,
-    @RequestParam(value = "stocklen", required = false) String stockLength,
-    @RequestParam(value = "pcscount", required = false) String pcsCount,
+    @RequestParam(value = "stocklen", required = false) List<String> stockLength,
+    @RequestParam(value = "pcscount", required = false) List<String> pcsCount,
     @RequestParam(value = "pclength", required = false) String pcLength, Model mdl  )
   {
-    //nextFit(stockCount, stockLength, pcsCount, pcLength);
-    //mdl.addAttribute("wynik", nextFit(stockCount, stockLength, pcsCount, pcLength));
+    System.out.println(pcsCount);
+    System.out.println(stockLength);
+
+    oneDCutterService.makePartListFromInputs(pcsCount, stockLength);
+
+
 
     // liczymy
     mdl.addAttribute("stockLen", oneDCutterService.getStockLen());

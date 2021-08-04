@@ -23,6 +23,8 @@
   <!-- Navbar -->
 
   <div class=col-sm-4 id="addRowsHere">
+    <button type="button" id="add-btn" name="add-btn" value="add-btn">Add new row</button>
+
     <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
 
 
@@ -34,72 +36,37 @@
 
         <tr class="unit-table">
           <td>
-            <input type="text">
+            <input type="number" name="stocklen" id="stocklen" value="0">
           </td>
           <td>
-            <input type="text">
-          </td>
-        </tr>
-        <tr class="unit-table">
-          <td>
-            <input type="text">
-          </td>
-          <td>
-            <input type="text">
+            <input type="number" name="pcscount" id="pcscount" value="0">
           </td>
         </tr>
-        <tr class="unit-table">
+        <tr class="unit-table2">
           <td>
-            <input type="text">
+            <input type="number" name="stocklen" id="stocklen" value="0">
           </td>
           <td>
-            <input type="text">
+            <input type="number" name="pcscount" id="pcscount" value="0">
+          </td>
+        </tr>
+        <tr class="unit-table3" id="unit-table3" name="unit-table3" value="unit-table3">
+          <td>
+            <input type="number" name="stocklen" id="stocklen" value="0">
+          </td>
+          <td>
+            <input type="number" name="pcscount" id="pcscount" value="0">
           </td>
         </tr>
       </table>
+
       <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj
       </button>
 
     </form>
 
-    <button id="add_btn">Add new row</button>
   </div>
-  <!--
-      <div class="form-row">
-        <div class="col-md-6 mb-3">
-          <label for="validationCustom01">Ilosc materialu:</label>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="validationCustom02">Dlugosc materialu:</label>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-md-6 mb-3">
-          <input type="text" class="form-control" id="validationCustom01" required>
-          <input type="text" name="stockcount" id="stockcount" class="col-sm" placeholder="Ilosc materialu"
-            autofocus="true">
-        </div>
-        <div class="col-md-6 mb-3">
-          <input type="text" class="form-control" id="validationCustom02" required>
-          <input type="text" name="stocklen" id="stocklen" class="col-sm" placeholder="Dlugosc materiau">
-        </div>
-      </div>
-    -->
-  <!--
-      <div class="col-sm">
-        <label>Ilosc elementow:</label>
-        <input type="text" name="pcscount" id="pcscount" class="col-sm" placeholder="Ilosc sztuk">
-      </div>
-      <div class="col-sm">
-        <label>Wymiary:</label>
-        <input type="text" name="pclength" id="pclength" class="col-sm" placeholder="Dlugosc">
-      </div>
-      <div class="col-sm">
-        <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj
-        </button>
-      </div>-->
 
-  </div>
 
   <div class="col-sm-4">
     <label> Ilosc potrzebnego materialu: </label><span th:text=" ${wynik}"></span>
@@ -139,6 +106,7 @@
 </html>
 
 <script>
+  /*
   function addRow() {
     var table = document.getElementById("myTable");
     var rows = document.getElementById("myTable").rows.length;
@@ -157,4 +125,13 @@
 
   }
   document.getElementById('add_btn').onclick = addRow;
+  */
+  jQuery(function ($) {
+    var $button = $('#add-btn'),
+      $row = $('.unit-table3').clone();
+
+    $button.click(function () {
+      $row.clone().insertAfter($('#unit-table3'));
+    });
+  });
 </script>

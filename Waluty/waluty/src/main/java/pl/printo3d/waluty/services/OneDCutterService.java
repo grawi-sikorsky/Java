@@ -114,5 +114,19 @@ public class OneDCutterService {
 
     return result;
   }
+
+  public List<Double> makePartListFromInputs( List<String> pcsCnt, List<String> pcLen )
+  {
+    partsList.clear();
+    
+    for(int i=0; i < pcsCnt.stream().count(); ++i)
+    {
+      for (int j=0; j < Integer.parseInt(pcsCnt.get(i)); ++j)
+      {
+        partsList.add(Double.parseDouble(pcLen.get(i)));
+      }
+    }
+    return partsList;
+  }
   
 }
