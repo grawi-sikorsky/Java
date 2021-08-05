@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.printo3d.waluty.model.cutListModel;
+import pl.printo3d.waluty.model.CutListModel;
+import pl.printo3d.waluty.model.StockListModel;
 import pl.printo3d.waluty.services.OneDCutterService;
 
 @Controller
@@ -19,49 +20,53 @@ public class OneDimCutController {
   @RequestMapping(value="/1dcut", method={RequestMethod.GET})
   public String OneDimCutControllerShow(Model mdl)
   {
-    mdl.addAttribute("pclength", oneDCutterService.pcsLength);
-    mdl.addAttribute("pcscount", oneDCutterService.pcs);
+    //mdl.addAttribute("in_pclength", oneDCutterService.pcsLength);
+    //mdl.addAttribute("in_pcscount", oneDCutterService.pcs);
+    mdl.addAttribute("stocklist", oneDCutterService.stockList);
     mdl.addAttribute("cuttlistmap", oneDCutterService.cutList);
     return "1dcut";
   }
 
   @RequestMapping(value="/1dcut", method={RequestMethod.POST})
   public String ReqStockRun(
-    @RequestParam(value = "stockcount", required = false)   String stockCount,
-    @RequestParam(value = "stocklength", required = false)  List<String> stockLength,
-    @RequestParam(value = "pcscount", required = false)     List<String> pcsCount,
-    @RequestParam(value = "pclength", required = false)     List<String> pcLength, Model mdl  )
+    @RequestParam(value = "in_stockcount", required = false)   List<String> in_stockCount,
+    @RequestParam(value = "in_stocklength", required = false)  List<String> in_stockLength,
+    @RequestParam(value = "in_pcscount", required = false)  List<String> in_pcscount,
+    @RequestParam(value = "in_pclength", required = false)  List<String> in_pclength, Model mdl  )
   {
-    System.out.println(pcsCount);
-    System.out.println(pcLength);
-    System.out.println(stockCount);
-    System.out.println(stockLength);
+    System.out.println(in_pcscount);
+    System.out.println(in_pclength);
+    System.out.println(in_stockCount);
+    System.out.println(in_stockLength);
     System.out.println(oneDCutterService.calculateWaste());
 
     oneDCutterService.cutList.clear();
-    for (int i=0; i < pcLength.size(); ++i) 
+    for (int i=0; i < in_pclength.size(); ++i) 
     {
-      oneDCutterService.cutList.add(new cutListModel(pcLength.get(i), pcsCount.get(i)));
+      oneDCutterService.cutList.add(new CutListModel(in_pclength.get(i), in_pcscount.get(i)));
     }
     mdl.addAttribute("cuttlistmap", oneDCutterService.cutList);
 
+    oneDCutterService.stockList.clear();
+    for (int i=0; i < in_stockLength.size(); ++i) 
+    {
+      oneDCutterService.stockList.add(new StockListModel(in_stockLength.get(i), in_stockCount.get(i)));
+    }
+    mdl.addAttribute("stocklist", oneDCutterService.stockList);
 
-    oneDCutterService.makePartListFromInputs(pcsCount, pcLength);
-    oneDCutterService.SortReverse();
+
     oneDCutterService.firstFit();
 
     mdl.addAttribute("wyniki", oneDCutterService.getResults());
-    mdl.addAttribute("pclength", pcLength);
-    mdl.addAttribute("pcscount", pcsCount);
 
     // liczymy
-    mdl.addAttribute("stockLen", oneDCutterService.getStockLen());
-    mdl.addAttribute("stockPcs", oneDCutterService.getStockPcs());
+    mdl.addAttribute("stockLen", oneDCutterService.stockList.get(0).getStockLenght());
+    mdl.addAttribute("stockPcs", oneDCutterService.stockList.get(0).getStockPcs());
     mdl.addAttribute("cuts", oneDCutterService.getCuts());
     mdl.addAttribute("stockneed", oneDCutterService.calculateNeededStock(oneDCutterService.partsList, oneDCutterService.stockLen));
     mdl.addAttribute("wasteproc", oneDCutterService.calculateWaste());
     mdl.addAttribute("usedproc", 100 - oneDCutterService.calculateWaste());
-
+    mdl.addAttribute("resultbars", oneDCutterService.getResultBars());
 
     return "1dcut";
   }

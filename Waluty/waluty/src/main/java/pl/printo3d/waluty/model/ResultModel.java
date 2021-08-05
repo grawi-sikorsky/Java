@@ -8,6 +8,7 @@ public class ResultModel {
   private Double resultWaste;
   private Double resultUsed;
   private Double resultWasteProcent;
+  private Double resultCutPiecePercent;
 
   private List<String> result = new ArrayList<String>();
 
@@ -37,6 +38,25 @@ public class ResultModel {
     }
 
     return result;
+  }
+
+  public List<List<String>> getResultsBars(List<StockPiece> workPieces)
+  {
+    List<List<String>> resultBars = new ArrayList<List<String>>();
+    List<String> resultBar = new ArrayList<String>();
+    resultBars.clear();
+
+    for (StockPiece wp : workPieces)
+    {
+      for(int i=0; i < wp.cuts.size(); ++i)
+      {
+        resultBar.add(String.valueOf(  ( wp.cuts.get(i) / wp.getStockLenght() ) * 100) );
+      }
+      resultBars.add(new ArrayList<String>(resultBar));
+      resultBar.clear();
+    }
+
+    return resultBars;
   }
 
   public Double calculateWaste(List<StockPiece> workPieces)

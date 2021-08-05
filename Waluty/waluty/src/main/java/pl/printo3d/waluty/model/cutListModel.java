@@ -2,7 +2,7 @@
 
 import javax.persistence.GeneratedValue;
 
-public class cutListModel {
+public class CutListModel {
 
   @GeneratedValue
   Long id;
@@ -11,12 +11,12 @@ public class cutListModel {
   String name;
 
 
-  public cutListModel(String cutLenght, String cutPcs) {
+  public CutListModel(String cutLenght, String cutPcs) {
     this.cutLenght = cutLenght;
     this.cutPcs = cutPcs;
   }
 
-  public cutListModel(Long id, String cutLenght, String cutPcs, String name) {
+  public CutListModel(Long id, String cutLenght, String cutPcs, String name) {
     this.id = id;
     this.cutLenght = cutLenght;
     this.cutPcs = cutPcs;

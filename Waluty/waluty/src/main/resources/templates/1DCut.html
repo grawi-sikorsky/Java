@@ -36,12 +36,12 @@
           <th> </th>
         </tr>
 
-        <tr id="stock-table0" class="stock-table0">
+        <tr th:each="instance,iterStat : ${stocklist}" th:id="'stock-table' + ${iterStat.index}" th:class="'stock-table' + ${iterStat.index}">
           <td>
-            <input type="number" name="stocklength" id="stocklength" value="1000" style="width: 120px">
+            <input type="number" name="in_stocklength" id="in_stocklength" th:value="${instance.stockLenght}" style="width: 120px">
           </td>
           <td>
-            <input type="number" name="stockcount" id="stockcount" value="100" style="width: 120px">
+            <input type="number" name="in_stockcount" id="in_stockcount" th:value="${instance.stockPcs}" style="width: 120px">
           </td>
           <td>
             <input type="button" id="bt" value="Delete" onclick="removeRowStock(this)" />
@@ -59,10 +59,10 @@
 
         <tr th:each="instance,iterStat : ${cuttlistmap}" th:id="'unit-table' + ${iterStat.index}" th:class="'unit-table' + ${iterStat.index}">
           <td>
-            <input type="number" name="pclength" id="pclength" th:value="${instance.cutLenght}" style="width: 120px">
+            <input type="number" name="in_pclength" id="in_pclength" th:value="${instance.cutLenght}" style="width: 120px">
           </td>
           <td>
-            <input type="number" name="pcscount" id="pcscount" th:value="${instance.cutPcs}" style="width: 120px">
+            <input type="number" name="in_pcscount" id="in_pcscount" th:value="${instance.cutPcs}" style="width: 120px">
           </td>
           <td>
             <input type="button" id="bt" value="Delete" onclick="removeRowCuts(this)" />
@@ -92,6 +92,14 @@
     <div class="col-sm">
       <label> Procent odpadu: </label><span th:text=" ${wasteproc} + ' %'"></span>
     </div>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" th:style="'width:'+ ${usedproc} + '%' " th:text=" 'Wykorzystano: ' + ${usedproc} + ' %' ">
+        Free Space
+      </div>
+      <div class="progress-bar progress-bar-warning" role="progressbar" th:style="'width:'+ ${wasteproc} + '%' " th:text=" 'Odpad: ' + ${wasteproc} + ' %' ">
+        Warning
+      </div>
+    </div>
     <div class="col-sm">
       <label> Wymagane odcinki: </label><span th:text=" ${cuts}"></span>
     </div>
@@ -105,14 +113,12 @@
       <option th:each="instance : ${wyniki}" th:value="${instance}" th:text="${instance}" th:name="wyniki"></option>
     </div>
 
-    <div class="progress">
-      <div class="progress-bar progress-bar-success" role="progressbar" th:style="'width:'+ ${usedproc} + '%' " th:text=" 'Wykorzystano: ' + ${usedproc} + ' %' ">
+    <div class="progress" th:each="bars : ${resultbars}" >
+      <div th:each="bar : ${bars}" class="cutbar progress-bar progress-bar-success" role="progressbar" th:style="'width:'+ ${bar} + '%' " th:text="${bar}*10">
         Free Space
       </div>
-      <div class="progress-bar progress-bar-warning" role="progressbar" th:style="'width:'+ ${wasteproc} + '%' " th:text=" 'Odpad: ' + ${wasteproc} + ' %' ">
-        Warning
-      </div>
     </div>
+
 
 
   </div>

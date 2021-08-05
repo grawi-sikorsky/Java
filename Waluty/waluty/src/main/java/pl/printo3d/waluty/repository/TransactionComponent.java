@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransactionComponent {
   private TransRepo transRepo;
-  private UserRepo userRepo;
 
   @Autowired
   public TransactionComponent(TransRepo transRepo, UserRepo tUserRepo) 
   {
     this.transRepo = transRepo;
-    this.userRepo = tUserRepo;
   }
 
   @EventListener(ApplicationReadyEvent.class)

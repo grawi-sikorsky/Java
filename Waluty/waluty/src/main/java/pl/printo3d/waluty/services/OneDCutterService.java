@@ -5,25 +5,34 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import pl.printo3d.waluty.model.CutListModel;
 import pl.printo3d.waluty.model.ResultModel;
+import pl.printo3d.waluty.model.StockListModel;
 import pl.printo3d.waluty.model.StockPiece;
-import pl.printo3d.waluty.model.cutListModel;
+import pl.printo3d.waluty.repository.UserService;
 
 public class OneDCutterService {
   
+  @Autowired
+  UserService us;
   // lista roboczych kawalkow - kazdy zawiera info o cieciach oraz o ilosci wolnego miejsca na nim
   public List<StockPiece> workPieces = new ArrayList<StockPiece>();
 
-  // resulty
+  // Wyniki (obecnie bez historii)
   public List<ResultModel> results = new ArrayList<ResultModel>();
 
-  // Multimapa zawierajaca klucze (dlugosci) i wartosci (ilosc)
-  public List<cutListModel> cutList = new ArrayList<cutListModel>();
+  // Lista zawierajace klucze (dlugosci) i wartosci (ilosc) formatek do ciecia
+  public List<CutListModel> cutList = new ArrayList<CutListModel>();
+
+  // Lista zawierajace dlugosci i ilosci surowca
+  public List<StockListModel> stockList = new ArrayList<StockListModel>();
   
   // zmjenne
-  public List<String> stockLen = new ArrayList<String>(Arrays.asList("1000"));
-  public List<String> stockPcs = new ArrayList<String>(Arrays.asList("10"));
-  public List<String> pcsLength = new ArrayList<String>(Arrays.asList("100","200"));
+  public List<String> stockLen = new ArrayList<String>(Arrays.asList("1000"));  // not used?
+  public List<String> stockPcs = new ArrayList<String>(Arrays.asList("10"));    // not used?
+  public List<String> pcsLength = new ArrayList<String>(Arrays.asList("100","200"));  // notused?
   public List<String> pcs = new ArrayList<String>(Arrays.asList("5","2"));
   public List<Double> partsList = new ArrayList<Double>(Arrays.asList(
     320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,
@@ -31,13 +40,33 @@ public class OneDCutterService {
 
   public OneDCutterService()
   {
-    cutList.add(new cutListModel("200", "5"));
+    cutList.add(new CutListModel("200", "5"));
+    stockList.add(new StockListModel("1000", "5"));
   }
   //public List<String> wyniki = new ArrayList<String>();
 
-  // Sortowanie odwrotne
-  public List<Double> SortReverse()
+  // Tworzy liste elementow do ciecia na podstawie wpisanych danych
+  public List<Double> makePartList(List<CutListModel> CL)
   {
+    partsList.clear();
+    for(CutListModel c : CL) 
+    {
+      for(int i=0; i < Integer.parseInt(c.getCutPcs()); ++i)
+      {
+        partsList.add(Double.parseDouble(c.getCutLenght()));
+      }
+    }
+    //UserEntity ue = new UserEntity();
+    //ue.setCutList(cutList);
+    //us.updateUser(ue);
+
+    return partsList;
+  }
+
+  // Sortowanie odwrotne
+  public List<Double> sortReverse()
+  {
+    makePartList(cutList);
     Collections.sort(partsList);
     Collections.reverse(partsList);
 
@@ -47,6 +76,9 @@ public class OneDCutterService {
   // 1. Pierwsza metoda rozwiazania problemu 
   public List<StockPiece> firstFit(/* List<String> parts, List<String> stockPcs, List<String> stockLen */)
   {
+    // rewers..
+    sortReverse();
+
     // flush workpieces:
     workPieces.clear();
     
@@ -55,8 +87,8 @@ public class OneDCutterService {
       System.out.println("Next part is: " + part);
       if(!workPieces.stream().anyMatch(work->work.freeSpace() >= part))
       {
-        workPieces.add(new StockPiece(1000.0));
-        System.out.println("No free left, adding new stock piece 1000.0");
+        workPieces.add(new StockPiece(Double.valueOf(stockList.get(0).getStockLenght())));
+        System.out.println("No free left, adding new stock piece: " + stockList.get(0).getStockLenght());
       }
 
       for(var work : workPieces)
@@ -79,6 +111,7 @@ public class OneDCutterService {
 
     return workPieces;
   }
+  
   // Wypisuje rezultat obliczen
   public List<String> getResults()
   {
@@ -86,19 +119,9 @@ public class OneDCutterService {
     return results.get(0).getResults(workPieces);
   }
 
-  // Tworzy liste elementow do ciecia na podstawie wpisanych danych
-  public List<Double> makePartListFromInputs( List<String> pcsCnt, List<String> pcLen )
+  public List<List<String>> getResultBars()
   {
-    partsList.clear();
-
-    for(int i=0; i < pcsCnt.stream().count(); ++i)
-    {
-      for (int j=0; j < Integer.parseInt(pcsCnt.get(i)); ++j)
-      {
-        partsList.add(Double.parseDouble(pcLen.get(i)));
-      }
-    }
-    return partsList;
+    return results.get(0).getResultsBars(workPieces);
   }
 
   // Oblicza ilosc potrzebnych elementow do wykonania zadania
@@ -112,7 +135,7 @@ public class OneDCutterService {
       stockNeed += (Integer)part.intValue();
     }
     stockNeed = (stockNeed / Integer.valueOf(stockLength.get(0)) +1 );
-    //stockNeed = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
+    //stockNeed = ((Integer.valueOf(in_pcscount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
 
     System.out.println(stockNeed);
 

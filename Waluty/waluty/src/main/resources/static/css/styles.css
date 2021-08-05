@@ -126,3 +126,9 @@
 {
 	width: 200px;
 }
+.cutbar{
+	border: 0px;
+	border-left: 1px;
+	border-color: #4a4a4aba;
+	border-style: solid;
+}

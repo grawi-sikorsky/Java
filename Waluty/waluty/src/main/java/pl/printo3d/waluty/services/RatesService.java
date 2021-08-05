@@ -54,7 +54,7 @@ public class RatesService {
   // zwraca pare: waluta + exchange rate dla podanego kodu
   public LinkedHashMap<String,String> findCurrency(String search)
   {
-    LinkedHashMap <String,String> o = new LinkedHashMap();
+    LinkedHashMap <String,String> o = new LinkedHashMap<String,String>();
   
     o.put(search.toUpperCase(), rates.getRates().get(search.toUpperCase()));
     return o;
