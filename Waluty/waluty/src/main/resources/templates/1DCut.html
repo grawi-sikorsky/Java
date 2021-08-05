@@ -22,7 +22,7 @@
   <nav th:replace="fragments/navbar" xtra:strip-whitespace="shallow">Navbar tutaj</nav>
   <!-- Navbar -->
 
-  <div class=col-sm-4 id="addRowsHere" style="padding-top: 20px;">
+  <div class=col-sm-4 id="addRowsHere">
 
     <button id="add-btn" class="btn btn btn-primary" type="submit"><i class="fas fa-plus"></i> Dodaj
     </button>
@@ -36,13 +36,12 @@
           <th> </th>
         </tr>
 
-        <tr th:id="'unit-table' + ${iterStat.index}" th:class="'unit-table' + ${iterStat.index}"
-          th:each="instance,iterStat : ${pclength}">
+        <tr th:each="instance,iterStat : ${cuttlistmap}" th:id="'unit-table' + ${iterStat.index}" th:class="'unit-table' + ${iterStat.index}">
           <td>
-            <input type="number" name="pclength" id="pclength" th:value="${instance}" style="width: 120px">
+            <input type="number" name="pclength" id="pclength" th:value="${instance.cutLenght}" style="width: 120px">
           </td>
           <td>
-            <input type="number" name="pcscount" id="pcscount" value="2" style="width: 120px">
+            <input type="number" name="pcscount" id="pcscount" th:value="${instance.cutPcs}" style="width: 120px">
           </td>
           <td>
             <input type="button" id="bt" value="Delete" onclick="removeRow(this)" />
@@ -70,20 +69,28 @@
       <label> Ilosc potrzebnego materialu: </label><span th:text=" ${stockneed}"></span>
     </div>
     <div class="col-sm">
+      <label> Procent odpadu: </label><span th:text=" ${wasteproc} + ' %'"></span>
+    </div>
+    <div class="col-sm">
       <label> Wymagane odcinki: </label><span th:text=" ${cuts}"></span>
     </div>
     <div class="col-sm">
-      <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
-        <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fas fa-check"></i> Optymalizuj
-        </button>
-      </form>
     </div>
     <div class="col-sm">
-      <label> --------------------- </label></span>
+      <label> ------------------------------------------------------- </label></span>
     </div>
     <div class="col-sm">
       <label> Wyniki: </label></span>
       <option th:each="instance : ${wyniki}" th:value="${instance}" th:text="${instance}" th:name="wyniki"></option>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" th:style="'width:'+ ${usedproc} + '%' " th:text=" 'Wykorzystano: ' + ${usedproc} + ' %' ">
+        Free Space
+      </div>
+      <div class="progress-bar progress-bar-warning" role="progressbar" th:style="'width:'+ ${wasteproc} + '%' " th:text=" 'Odpad: ' + ${wasteproc} + ' %' ">
+        Warning
+      </div>
     </div>
 
 

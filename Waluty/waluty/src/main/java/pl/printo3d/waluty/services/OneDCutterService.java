@@ -5,13 +5,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import pl.printo3d.waluty.model.ResultModel;
 import pl.printo3d.waluty.model.StockPiece;
+import pl.printo3d.waluty.model.cutListModel;
 
 public class OneDCutterService {
   
   // lista roboczych kawalkow - kazdy zawiera info o cieciach oraz o ilosci wolnego miejsca na nim
   public List<StockPiece> workPieces = new ArrayList<StockPiece>();
 
+  // resulty
+  public List<ResultModel> results = new ArrayList<ResultModel>();
+
+  // Multimapa zawierajaca klucze (dlugosci) i wartosci (ilosc)
+  public List<cutListModel> cutList = new ArrayList<cutListModel>();
+  
+  // zmjenne
   public List<String> stockLen = new ArrayList<String>(Arrays.asList("1000"));
   public List<String> stockPcs = new ArrayList<String>(Arrays.asList("10"));
   public List<String> pcsLength = new ArrayList<String>(Arrays.asList("100","200"));
@@ -20,7 +29,11 @@ public class OneDCutterService {
     320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,320.0,350.0,370.0,
     320.0,350.0,370.0,320.0,350.0,370.0,260.0, 310.0));
 
-  public List<String> wyniki = new ArrayList<String>();
+  public OneDCutterService()
+  {
+    cutList.add(new cutListModel("200", "5"));
+  }
+  //public List<String> wyniki = new ArrayList<String>();
 
   // Sortowanie odwrotne
   public List<Double> SortReverse()
@@ -66,28 +79,11 @@ public class OneDCutterService {
 
     return workPieces;
   }
-
   // Wypisuje rezultat obliczen
   public List<String> getResults()
   {
-    List<String> result = new ArrayList<String>();
-
-    for (var work : workPieces) 
-    {
-      StringBuilder temp = new StringBuilder();
-      temp.append("Dlugość 1000: |  ");
-
-      for(int i=0; i<work.cuts.size(); ++i)
-      {
-        temp.append(work.cuts.get(i).toString() + "  |  ");
-      }
-
-      temp.append(" - odpad: " + work.freeSpace());
-      
-      result.add(temp.toString());
-    }
-
-    return result;
+    results.add(new ResultModel());
+    return results.get(0).getResults(workPieces);
   }
 
   // Tworzy liste elementow do ciecia na podstawie wpisanych danych
@@ -123,9 +119,20 @@ public class OneDCutterService {
     return stockNeed;
   }
 
+  public Double calculateWaste()
+  {
+    Double waste=0.0, used=0.0;
+    Double procWaste=0.0;
 
+    for (var workpc : workPieces) 
+    {
+      used += workpc.getStockLenght();
+      waste += workpc.freeSpace();
+    }
+    procWaste = (waste / used) * 100.0;
 
-
+    return procWaste;
+  }
 
   
   public List<String> getStockLen() {

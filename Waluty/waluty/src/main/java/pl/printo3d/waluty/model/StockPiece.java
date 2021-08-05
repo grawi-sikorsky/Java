@@ -6,6 +6,7 @@ import java.util.List;
 public class StockPiece {
 
   private Double stockLenght;
+
   public List<Double> cuts = new ArrayList<Double>();
 
   public StockPiece(Double lenght)
@@ -27,4 +28,12 @@ public class StockPiece {
   {
     cuts.add(cutLenght);
   }  
+
+  public Double getStockLenght() {
+    return stockLenght;
+  }
+
+  public void setStockLenght(Double stockLenght) {
+    this.stockLenght = stockLenght;
+  }
 }

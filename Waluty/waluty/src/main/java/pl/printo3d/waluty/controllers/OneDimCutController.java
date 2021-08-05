@@ -1,8 +1,6 @@
 ﻿package pl.printo3d.waluty.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.printo3d.waluty.model.cutListModel;
 import pl.printo3d.waluty.services.OneDCutterService;
 
 @Controller
@@ -22,6 +21,7 @@ public class OneDimCutController {
   {
     mdl.addAttribute("pclength", oneDCutterService.pcsLength);
     mdl.addAttribute("pcscount", oneDCutterService.pcs);
+    mdl.addAttribute("cuttlistmap", oneDCutterService.cutList);
     return "1dcut";
   }
 
@@ -34,23 +34,32 @@ public class OneDimCutController {
   {
     System.out.println(pcsCount);
     System.out.println(pcLength);
+    System.out.println(oneDCutterService.calculateWaste());
+
+    oneDCutterService.cutList.clear();
+    for (int i=0; i < pcLength.size(); ++i) 
+    {
+      oneDCutterService.cutList.add(new cutListModel(pcLength.get(i), pcsCount.get(i)));
+    }
+    mdl.addAttribute("cuttlistmap", oneDCutterService.cutList);
+
 
     oneDCutterService.makePartListFromInputs(pcsCount, pcLength);
+    oneDCutterService.SortReverse();
+    oneDCutterService.firstFit();
+
+    mdl.addAttribute("wyniki", oneDCutterService.getResults());
     mdl.addAttribute("pclength", pcLength);
     mdl.addAttribute("pcscount", pcsCount);
-
 
     // liczymy
     mdl.addAttribute("stockLen", oneDCutterService.getStockLen());
     mdl.addAttribute("stockPcs", oneDCutterService.getStockPcs());
     mdl.addAttribute("cuts", oneDCutterService.getCuts());
     mdl.addAttribute("stockneed", oneDCutterService.calculateNeededStock(oneDCutterService.partsList, oneDCutterService.stockLen));
+    mdl.addAttribute("wasteproc", oneDCutterService.calculateWaste());
+    mdl.addAttribute("usedproc", 100 - oneDCutterService.calculateWaste());
 
-    oneDCutterService.SortReverse();
-    //oneDCutterService.firstFit(parts, stockPcs, stockLen);
-    oneDCutterService.firstFit();
-
-    mdl.addAttribute("wyniki", oneDCutterService.getResults());
 
     return "1dcut";
   }
