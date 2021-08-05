@@ -111,3 +111,13 @@
 	box-shadow: 0 0 5px rgba(0,80,80,.4); 
 	border-radius: 4px;
 }
+
+/*** 1D Stock Cut style ***/
+#add-btn
+{
+	float:right;
+}
+.table form input
+{
+	width: 200px;
+}

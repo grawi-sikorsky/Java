@@ -17,27 +17,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<body onload="createTable()">
+<body>
   <!-- Navbar -->
   <nav th:replace="fragments/navbar" xtra:strip-whitespace="shallow">Navbar tutaj</nav>
   <!-- Navbar -->
 
-  <div class=col-sm-4 id="addRowsHere">
-    <button type="button" id="add-btn" name="add-btn" value="add-btn">Add new row</button>
-    <p>
-      <input class="btn btn btn-primary btn-block" type="button" id="addRow" value="Add New Row" onclick="addRow()" />
-    </p>
+  <div class=col-sm-4 id="addRowsHere" style="padding-top: 20px;">
 
-    <div id="cont"></div> <!-- the container to add the TABLE -->
+    <button id="add-btn" class="btn btn btn-primary" type="submit"><i class="fas fa-plus"></i> Dodaj
+    </button>
 
-    <p>
-      <input type="button" id="bt" value="Submit Data" onclick="submit()" />
-    </p>
-
-    <p id='output'></p>
     <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
-
-
 
       <table id="myTable" class="table">
         <tr>
@@ -46,12 +36,13 @@
           <th> </th>
         </tr>
 
-        <tr th:id="'unit-table' + ${iterStat.index}" th:class="'unit-table' + ${iterStat.index}" th:each="instance,iterStat : ${pclength}">
+        <tr th:id="'unit-table' + ${iterStat.index}" th:class="'unit-table' + ${iterStat.index}"
+          th:each="instance,iterStat : ${pclength}">
           <td>
-            <input type="number" name="pclength" id="pclength" th:value="${instance}">
+            <input type="number" name="pclength" id="pclength" th:value="${instance}" style="width: 120px">
           </td>
           <td>
-            <input type="number" name="pcscount" id="pcscount" value="2">
+            <input type="number" name="pcscount" id="pcscount" value="2" style="width: 120px">
           </td>
           <td>
             <input type="button" id="bt" value="Delete" onclick="removeRow(this)" />
@@ -67,16 +58,16 @@
   </div>
 
 
-  <div class="col-sm-4">
-    <label> Ilosc potrzebnego materialu: </label><span th:text=" ${wynik}"></span>
-  </div>
 
-  <div class="col-sm-4">
+  <div class="col-sm-5">
     <div class="col-sm">
       <label> Dostepna dlugosc pretow: </label><span th:text=" ${stockLen}"></span>
     </div>
     <div class="col-sm">
       <label> Dostepna ilosc pretow: </label><span th:text=" ${stockPcs}"></span>
+    </div>
+    <div class="col-sm">
+      <label> Ilosc potrzebnego materialu: </label><span th:text=" ${stockneed}"></span>
     </div>
     <div class="col-sm">
       <label> Wymagane odcinki: </label><span th:text=" ${cuts}"></span>
@@ -102,124 +93,23 @@
 
 </body>
 
-
-
-
-<script>
-  var arrHead = new Array();	// array for header.
-  arrHead = ['Dlugość odcinka', 'Ilość sztuk', ''];
-
-  // first create TABLE structure with the headers. 
-  function createTable() {
-    var empTable = document.createElement('table');
-    empTable.setAttribute('id', 'empTable'); // table id.
-
-    var tr = empTable.insertRow(-1);
-    for (var h = 0; h < arrHead.length; h++) {
-      var th = document.createElement('th'); // create table headers
-      th.innerHTML = arrHead[h];
-      tr.appendChild(th);
-    }
-
-    var div = document.getElementById('cont');
-    div.appendChild(empTable);  // add the TABLE to the container.
-
-    addRow();
-  }
-
-  // now, add a new to the TABLE.
-  function addRow() {
-    var empTab = document.getElementById('empTable');
-
-    var rowCnt = empTab.rows.length;   // table row count.
-    var tr = empTab.insertRow(rowCnt); // the table row.
-    tr = empTab.insertRow(rowCnt);
-
-    for (var c = 0; c < arrHead.length; c++) {
-      var td = document.createElement('td'); // table definition.
-      td = tr.insertCell(c);
-
-      if (c == 2) {      // the last column.
-        // add a button in every new row in the first column.
-        var button = document.createElement('input');
-
-        // set input attributes.
-        button.setAttribute('type', 'button');
-        button.setAttribute('value', 'Usuń');
-
-        // add button's 'onclick' event.
-        button.setAttribute('onclick', 'removeRow(this)');
-
-        td.appendChild(button);
-      }
-      else {
-        // 2nd, 3rd and 4th column, will have textbox.
-        var ele = document.createElement('input');
-        ele.setAttribute('type', 'number');
-        ele.setAttribute('value', '');
-
-        td.appendChild(ele);
-      }
-    }
-  }
-
-  // delete TABLE row function.
-  function removeRow(oButton) {
-    var empTab = document.getElementById('empTable');
-    empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
-  }
-
-  // function to extract and submit table data.
-  function submit() {
-    var myTab = document.getElementById('empTable');
-    var arrValues = new Array();
-
-    // loop through each row of the table.
-    for (row = 1; row < myTab.rows.length - 1; row++) {
-      // loop through each cell in a row.
-      for (c = 0; c < myTab.rows[row].cells.length; c++) {
-        var element = myTab.rows.item(row).cells[c];
-        if (element.childNodes[0].getAttribute('type') == 'number') {
-          arrValues.push("'" + element.childNodes[0].value + "'");
-        }
-      }
-    }
-
-    // The final output.
-    document.getElementById('output').innerHTML = arrValues;
-    //console.log (arrValues);   // you can see the array values in your browsers console window. Thanks :-) 
-  }
-</script>
-
 </html>
 
 <script>
-  /*
-  function addRow() {
-    var table = document.getElementById("myTable");
-    var rows = document.getElementById("myTable").rows.length;
 
-    var table = document.getElementById("myTable");
-    var rows = document.getElementById("myTable").rows.length;
-    // add row 
-    var row = table.insertRow(rows);
-
-    // add input in cell 
-    for (var i = 0; i < 2; i++) {
-      var cell1 = row.insertCell(i);
-      var inputItem = document.createElement('input');
-      cell1.appendChild(inputItem);
-    }
-
+  // delete TABLE row function.
+  function removeRow(oButton) {
+    var empTab = document.getElementById('myTable');
+    empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
   }
-  document.getElementById('add_btn').onclick = addRow;
-  */
+
+
   jQuery(function ($) {
     var $button = $('#add-btn'),
       $row = $('.unit-table0').clone();
 
     $button.click(function () {
-      $row.clone().insertBefore($('#unit-table0').attr("class","dupa"));
+      $row.clone().insertBefore($('#unit-table0').attr("class", "dupa"));
     });
   });
 </script>

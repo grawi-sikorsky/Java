@@ -106,16 +106,21 @@ public class OneDCutterService {
   }
 
   // Oblicza ilosc potrzebnych elementow do wykonania zadania
-  public Integer calculateNeededStock(String stockCount, String stockLength, String pcsCount, String pcLength)
+  public Integer calculateNeededStock(List<Double> partsList, List<String> stockLength)
   {
-    Integer wynik=0;
+    Integer stockNeed=0;
 
     // int ucina co po przecinku wiec dodajemy 1 i jest ideoloooo
-    wynik = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
+    for (var part : partsList) 
+    {
+      stockNeed += (Integer)part.intValue();
+    }
+    stockNeed = (stockNeed / Integer.valueOf(stockLength.get(0)) +1 );
+    //stockNeed = ((Integer.valueOf(pcsCount) * Integer.valueOf(pcLength)) / Integer.valueOf(stockLength))+1;
 
-    System.out.println(wynik);
+    System.out.println(stockNeed);
 
-    return wynik;
+    return stockNeed;
   }
 
 

@@ -44,6 +44,7 @@ public class OneDimCutController {
     mdl.addAttribute("stockLen", oneDCutterService.getStockLen());
     mdl.addAttribute("stockPcs", oneDCutterService.getStockPcs());
     mdl.addAttribute("cuts", oneDCutterService.getCuts());
+    mdl.addAttribute("stockneed", oneDCutterService.calculateNeededStock(oneDCutterService.partsList, oneDCutterService.stockLen));
 
     oneDCutterService.SortReverse();
     //oneDCutterService.firstFit(parts, stockPcs, stockLen);
