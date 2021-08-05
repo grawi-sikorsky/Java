@@ -27,13 +27,15 @@ public class OneDimCutController {
 
   @RequestMapping(value="/1dcut", method={RequestMethod.POST})
   public String ReqStockRun(
-    @RequestParam(value = "stockcount", required = false) String stockCount,
-    @RequestParam(value = "stocklen", required = false) List<String> stockLength,
-    @RequestParam(value = "pcscount", required = false) List<String> pcsCount,
-    @RequestParam(value = "pclength", required = false) List<String> pcLength, Model mdl  )
+    @RequestParam(value = "stockcount", required = false)   String stockCount,
+    @RequestParam(value = "stocklength", required = false)  List<String> stockLength,
+    @RequestParam(value = "pcscount", required = false)     List<String> pcsCount,
+    @RequestParam(value = "pclength", required = false)     List<String> pcLength, Model mdl  )
   {
     System.out.println(pcsCount);
     System.out.println(pcLength);
+    System.out.println(stockCount);
+    System.out.println(stockLength);
     System.out.println(oneDCutterService.calculateWaste());
 
     oneDCutterService.cutList.clear();

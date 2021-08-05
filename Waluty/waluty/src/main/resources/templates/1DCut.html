@@ -24,12 +24,33 @@
 
   <div class=col-sm-4 id="addRowsHere">
 
-    <button id="add-btn" class="btn btn btn-primary" type="submit"><i class="fas fa-plus"></i> Dodaj
-    </button>
 
+    <button type="button" id="add-stock-btn" class="btn btn btn-primary"><i class="fas fa-plus"></i> Dodaj surowiec</button>
     <form control="" class="form-group" method="POST" th:action="@{/1dcut}">
 
-      <table id="myTable" class="table">
+      <table id="stockTable" class="table">
+        <label>Surowiec </label>
+        <tr>
+          <th> Dlugość materiału </th>
+          <th> Ilość </th>
+          <th> </th>
+        </tr>
+
+        <tr id="stock-table0" class="stock-table0">
+          <td>
+            <input type="number" name="stocklength" id="stocklength" value="1000" style="width: 120px">
+          </td>
+          <td>
+            <input type="number" name="stockcount" id="stockcount" value="100" style="width: 120px">
+          </td>
+          <td>
+            <input type="button" id="bt" value="Delete" onclick="removeRowStock(this)" />
+          </td>
+        </tr>
+      </table>
+
+      <button type="button" id="add-btn" class="btn btn btn-primary"><i class="fas fa-plus"></i> Dodaj formatkę</button>
+      <table id="cutTable" class="table">
         <tr>
           <th> Dlugość odcinka </th>
           <th> Ilość </th>
@@ -44,7 +65,7 @@
             <input type="number" name="pcscount" id="pcscount" th:value="${instance.cutPcs}" style="width: 120px">
           </td>
           <td>
-            <input type="button" id="bt" value="Delete" onclick="removeRow(this)" />
+            <input type="button" id="bt" value="Delete" onclick="removeRowCuts(this)" />
           </td>
         </tr>
       </table>
@@ -105,8 +126,14 @@
 <script>
 
   // delete TABLE row function.
-  function removeRow(oButton) {
-    var empTab = document.getElementById('myTable');
+  function removeRowCuts(oButton) {
+    var empTab = document.getElementById('cutTable');
+    empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+  }
+
+    // delete TABLE row function.
+    function removeRowStock(oButton) {
+    var empTab = document.getElementById('stockTable');
     empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
   }
 
@@ -119,4 +146,15 @@
       $row.clone().insertBefore($('#unit-table0').attr("class", "dupa"));
     });
   });
+
+  jQuery(function ($) {
+    var $button = $('#add-stock-btn'),
+      $row = $('.stock-table0').clone();
+
+    $button.click(function () {
+      $row.clone().insertBefore($('#stock-table0').attr("class", "dupa"));
+    });
+  });
+
+
 </script>
