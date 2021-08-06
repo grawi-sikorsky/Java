@@ -1,17 +1,15 @@
+body{
+	color: #464646;
+	font-family: Roboto;
+}
+
 .wynikbasecurrency{
   font-family: monospace;
   font-size: 12px;
   font-weight: 100;
   color: bisque!important;
 }
-.navbar-brand{
-	padding-top: 12px;
-}
-.navi{
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: lightgray;
-}
+
 .container-fluid{
   padding-left: 50px;
   padding-right: 50px;
@@ -27,9 +25,6 @@
   height: 40px;
 }
 
-body{
-	color: #464646;
-}
 
 /** LOGIN FORM **/
 .divider:after,
@@ -49,6 +44,12 @@ body{
 }
 /** END LOGIN FORM **/
 
+h5.user-name h6.user-email{
+	text-align: center;
+	padding-top: 10px;
+}
+
+
 /*** 1D Stock Cut style ***/
 #add-btn
 {
@@ -65,6 +66,7 @@ body{
 .cutbar{
 	border: 0px;
 	border-left: 1px;
+	border-right: 1px;
 	border-color: #4a4a4aba;
 	border-style: solid;
 }
@@ -72,14 +74,40 @@ body{
 form#leftform input {
 	width: 95%;
 }
-
 form#leftform td{
 	vertical-align: middle;
+}
+#addRowsHere .btn-sm{
+	font-size: 10px;
 }
 form#secform input {
 	width: 95%;
 }
-
 form#secform td{
 	vertical-align: middle;
+}
+
+.table{
+	font-size: 11px;
+}
+.table td{
+	padding: 1px!important;
+}
+
+
+.progress {
+	font-size: .65rem!important;
+	background-color: #a9a9a9!important;
+	border-radius: .35rem!important;
+}
+.probar{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.wynikicol{
+	font-size: 13px;
+}
+.wynikicol label{
+	font-size: 13px;
+	font-weight: 600;
 }

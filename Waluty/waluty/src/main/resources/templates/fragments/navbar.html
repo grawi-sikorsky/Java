@@ -12,20 +12,6 @@
     <a class="navbar-brand" href="/1dcut"><i class="fas fa-dice"></i> 1D Cut Optimizer</a>
     <a class="navbar-brand" href="#"><i class="fas fa-briefcase"></i> 2D Cut Optimizer</a>
 
-    <!-- Example single danger button -->
-    <div class="btn-group" sec:authorize="hasAuthority('KIEP')">
-      <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Action
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> Majne profajl</a></li>
-        <li><a class="dropdown-item" href="#"><i class="fas fa-smoking"></i> Szmeterling</a></li>
-        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Krankenwagen</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"> Wychodzę, bo nie zniesę</i></a></li>
-      </ul>
-    </div>
-
     <div class="userDropMenu" sec:authorize="hasAuthority('KIEP')">
       <div class="dropdown">
         <a href="#" class="dropdown-toggle " role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -38,7 +24,7 @@
           <li> <a class="dropdown-item" href="#"><i class="fas fa-smoking"></i> Szmeterling</a></li>
           <li> <a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Krankenwagen</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li> <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"> Wychodzę, bo nie zniesę</i></a></li>
+          <li> <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Wychodzę, bo nie zniesę</a></li>
         </ul>
       </div>
     </div>
