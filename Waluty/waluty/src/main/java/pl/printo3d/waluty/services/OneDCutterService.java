@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.printo3d.waluty.model.CutListModel;
+import pl.printo3d.waluty.model.ResultBarPiece;
 import pl.printo3d.waluty.model.ResultModel;
 import pl.printo3d.waluty.model.StockListModel;
 import pl.printo3d.waluty.model.StockPiece;
@@ -21,7 +23,7 @@ public class OneDCutterService {
   public List<StockPiece> workPieces = new ArrayList<StockPiece>();
 
   // Wyniki (obecnie bez historii)
-  public List<ResultModel> results = new ArrayList<ResultModel>();
+  public ResultModel results = new ResultModel();
 
   // Lista zawierajace klucze (dlugosci) i wartosci (ilosc) formatek do ciecia
   public List<CutListModel> cutList = new ArrayList<CutListModel>();
@@ -115,13 +117,12 @@ public class OneDCutterService {
   // Wypisuje rezultat obliczen
   public List<String> getResults()
   {
-    results.add(new ResultModel());
-    return results.get(0).getResults(workPieces);
+    return results.getResults(workPieces);
   }
 
-  public List<List<String>> getResultBars()
+  public List<List<ResultBarPiece>> getResultBars()
   {
-    return results.get(0).getResultsBars(workPieces);
+    return results.getResultsBars(workPieces);
   }
 
   // Oblicza ilosc potrzebnych elementow do wykonania zadania

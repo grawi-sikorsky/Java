@@ -41,14 +41,14 @@ public class OneDimCutController {
     System.out.println(oneDCutterService.calculateWaste());
 
     oneDCutterService.cutList.clear();
-    for (int i=0; i < in_pclength.size(); ++i) 
+    for (int i=0; i < in_pclength.size(); ++i)
     {
       oneDCutterService.cutList.add(new CutListModel(in_pclength.get(i), in_pcscount.get(i)));
     }
     mdl.addAttribute("cuttlistmap", oneDCutterService.cutList);
 
     oneDCutterService.stockList.clear();
-    for (int i=0; i < in_stockLength.size(); ++i) 
+    for (int i=0; i < in_stockLength.size(); ++i)
     {
       oneDCutterService.stockList.add(new StockListModel(in_stockLength.get(i), in_stockCount.get(i)));
     }

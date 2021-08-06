@@ -1,16 +1,18 @@
 ﻿package pl.printo3d.waluty.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResultModel {
 
   private Double resultWaste;
   private Double resultUsed;
   private Double resultWasteProcent;
-  private Double resultCutPiecePercent;
 
   private List<String> result = new ArrayList<String>();
+  private List<ResultBarPiece> resultBar = new ArrayList<ResultBarPiece>();
 
   public ResultModel()
   {
@@ -39,20 +41,20 @@ public class ResultModel {
 
     return result;
   }
-
-  public List<List<String>> getResultsBars(List<StockPiece> workPieces)
+// TODO: uciac wyswietlanie powtarzajacych sie barow
+  public List<List<ResultBarPiece>> getResultsBars(List<StockPiece> workPieces)
   {
-    List<List<String>> resultBars = new ArrayList<List<String>>();
-    List<String> resultBar = new ArrayList<String>();
+    List<List<ResultBarPiece>> resultBars = new ArrayList<List<ResultBarPiece>>();
+    //Map<String,String> resultBar = new HashMap<String,String>();
     resultBars.clear();
 
     for (StockPiece wp : workPieces)
     {
       for(int i=0; i < wp.cuts.size(); ++i)
       {
-        resultBar.add(String.valueOf(  ( wp.cuts.get(i) / wp.getStockLenght() ) * 100) );
+        resultBar.add(new ResultBarPiece((String.valueOf(  (wp.cuts.get(i) / wp.getStockLenght()) * 100)), String.valueOf(wp.cuts.get(i))));
       }
-      resultBars.add(new ArrayList<String>(resultBar));
+      resultBars.add(new ArrayList<ResultBarPiece>(resultBar));
       resultBar.clear();
     }
 

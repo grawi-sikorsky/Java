@@ -4,24 +4,17 @@
   font-weight: 100;
   color: bisque!important;
 }
-
+.navbar-brand{
+	padding-top: 12px;
+}
 .navi{
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: lightgray;
 }
-.navbar {
-  margin-bottom: 0px;
-	padding-bottom: 20px;
-}
 .container-fluid{
   padding-left: 50px;
   padding-right: 50px;
-}
-
-.loginbtn{
-  float: right;
-  margin: 10px;
 }
 
 .headerimg{
@@ -54,64 +47,22 @@
 
 
 /** LOGIN FORM **/
-.main-content{
-	width: 50%;
-	border-radius: 20px;
-	box-shadow: 0 5px 5px rgba(0,0,0,.4);
-	margin: 5em auto;
-	display: flex;
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
-.company__info{
-	background-color: #517fe3;
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	color: #fff;
+.h-custom {
+  height: calc(100% - 100px);
 }
-.fa-android{
-	font-size:3em;
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
 }
-@media screen and (max-width: 640px) {
-	.main-content{width: 90%;}
-	.company__info{
-		display: none;
-	}
-	.login_form{
-		border-top-left-radius:20px;
-		border-bottom-left-radius:20px;
-	}
-}
-@media screen and (min-width: 642px) and (max-width:800px){
-	.main-content{width: 70%;}
-}
-.row > h2{
-	color:#517fe3;
-}
-.login_form{
-	background-color: #fff;
-	border-top-right-radius:20px;
-	border-bottom-right-radius:20px;
-	border-top:1px solid #ccc;
-	border-right:1px solid #ccc;
-}
-.form__input{
-	width: 100%;
-	border:0px solid transparent;
-	border-radius: 0;
-	border-bottom: 1px solid #aaa;
-	padding: 1em .5em .5em;
-	padding-left: 2em;
-	outline:none;
-	margin:1.5em auto;
-	transition: all .5s ease;
-}
-.form__input:focus{
-	border-bottom-color: #517fe3;
-	box-shadow: 0 0 5px rgba(0,80,80,.4); 
-	border-radius: 4px;
-}
+/** END LOGIN FORM **/
 
 /*** 1D Stock Cut style ***/
 #add-btn
@@ -131,4 +82,12 @@
 	border-left: 1px;
 	border-color: #4a4a4aba;
 	border-style: solid;
+}
+
+form#leftform input {
+	width: 95%;
+}
+
+form#leftform td{
+	vertical-align: middle;
 }
