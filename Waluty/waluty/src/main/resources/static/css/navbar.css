@@ -1,1 +1,29 @@
-﻿
+﻿.navbar
+{
+  padding-top: 0;
+}
+
+/* USER DROPDOWN MENUUUUU */
+.userDropMenu{
+  float: right;
+  min-width: 150px;
+  height: 50px;
+  padding-top: 5px;
+  text-align: center;
+	text-decoration: none;
+}
+
+.userDropMenu li{
+  list-style: none;
+}
+.userDropMenu a{
+  text-decoration: none;
+  color: #525252;
+}
+.userDropMenuImg{
+  width: 40px;
+
+}
+.navbar-light .navbar-brand {
+  color: #636363;
+}
